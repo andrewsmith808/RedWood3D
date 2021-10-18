@@ -22,6 +22,17 @@ RedWoodEngine::~RedWoodEngine() {
     SDL_Quit();
 }
 
+void RedWoodEngine::run() {
+    
+    isRunning = initializeWindow();
+
+    while(isRunning) {
+        processInput();
+        render();
+    }
+
+}
+
 bool RedWoodEngine::initializeWindow() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         fprintf(stderr, "Error initializing SDL.\n");
@@ -50,4 +61,27 @@ bool RedWoodEngine::initializeWindow() {
     }
 
     return true;
+}
+
+void RedWoodEngine::render() {
+    SDL_SetRenderDrawColor(renderer, 69, 69, 69, 69);
+    SDL_RenderClear(renderer);
+
+    SDL_RenderPresent(renderer);
+}
+
+void RedWoodEngine::processInput() {
+    SDL_Event event;
+
+    while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case SDL_KEYDOWN:
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+				    isRunning = false;
+				    break;
+                }            
+            default:
+                break;
+        }
+    }
 }

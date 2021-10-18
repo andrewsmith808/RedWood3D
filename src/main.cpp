@@ -2,9 +2,9 @@
 
 int main() {
 
-    RedWoodEngine* instance = new RedWoodEngine();
+    RedWoodEngine* instance = new RedWoodEngine(1920, 1200);
 
-    instance->initializeWindow();
+    instance->run();
 
     delete instance;
 

@@ -21,7 +21,13 @@ class RedWoodEngine {
 
         ~RedWoodEngine();
 
+        void run();
+
         bool initializeWindow();
+
+        void render();
+
+        void processInput();
 };
 
 #endif // __RED_WOOD_ENGINE_HPP__
