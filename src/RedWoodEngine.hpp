@@ -37,6 +37,8 @@ class RedWoodEngine {
         void setup();
 
         void renderColorBuffer();
+
+        void clearColorBuffer(unsigned int color);
 };
 
 #endif // __RED_WOOD_ENGINE_HPP__

@@ -116,3 +116,12 @@ void RedWoodEngine::renderColorBuffer() {
     SDL_RenderCopy(renderer, colorBufferTexture, nullptr, nullptr);
 }
 
+void RedWoodEngine::clearColorBuffer(unsigned int color) {
+    for (int height = 0; height < windowHeight; height++) {
+        for (int width = 0; width < windowWidth; width++) {
+            colorBuffer[(windowWidth * height) + width] = color;
+        }
+    }
+
+}
+
