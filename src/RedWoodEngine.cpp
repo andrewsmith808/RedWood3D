@@ -7,6 +7,8 @@ RedWoodEngine::RedWoodEngine() {
     windowWidth = display_mode.w;
     windowHeight = display_mode.h;
     isRunning = false;
+    colorBuffer = nullptr;
+    colorBufferTexture = nullptr;
 }
 
 RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) :
@@ -14,7 +16,9 @@ RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) :
     windowHeight(windowHeight),
     window(nullptr),
     renderer(nullptr),
-    isRunning(false) {}
+    isRunning(false),
+    colorBuffer(nullptr),
+    colorBufferTexture(nullptr) {}
 
 RedWoodEngine::~RedWoodEngine() {
     SDL_DestroyRenderer(renderer);
@@ -85,3 +89,19 @@ void RedWoodEngine::processInput() {
         }
     }
 }
+
+void RedWoodEngine::setup() {
+
+    // allocate memory for the color buffer
+    colorBuffer = (unsigned int*)malloc(sizeof(unsigned int) * windowWidth * windowHeight);
+
+    // Creating a SDL texture that is used to display the color buffer
+    colorBufferTexture = SDL_CreateTexture(
+        renderer,
+        SDL_PIXELFORMAT_RGBA32,
+        SDL_TEXTUREACCESS_STREAMING,
+        windowWidth,
+        windowHeight
+    );
+}
+
