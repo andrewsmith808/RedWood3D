@@ -30,6 +30,8 @@ void RedWoodEngine::run() {
     
     isRunning = initializeWindow();
 
+    setup();
+
     while(isRunning) {
         processInput();
         render();
@@ -71,6 +73,8 @@ void RedWoodEngine::render() {
     SDL_RenderClear(renderer);
 
     renderColorBuffer();
+
+    clearColorBuffer(0xFF696969);
 
     SDL_RenderPresent(renderer);
 }
