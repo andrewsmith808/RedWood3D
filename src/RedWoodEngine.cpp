@@ -68,8 +68,9 @@ bool RedWoodEngine::initializeWindow() {
 }
 
 void RedWoodEngine::render() {
-    SDL_SetRenderDrawColor(renderer, 69, 69, 69, 69);
     SDL_RenderClear(renderer);
+
+    renderColorBuffer();
 
     SDL_RenderPresent(renderer);
 }
@@ -103,5 +104,15 @@ void RedWoodEngine::setup() {
         windowWidth,
         windowHeight
     );
+}
+
+void RedWoodEngine::renderColorBuffer() {
+    SDL_UpdateTexture(
+        colorBufferTexture,
+        nullptr,
+        colorBuffer,
+        (int)(windowWidth * sizeof(unsigned int))
+    );
+    SDL_RenderCopy(renderer, colorBufferTexture, nullptr, nullptr);
 }
 
