@@ -40,6 +40,8 @@ class Display {
 
         void drawGrid();
 
+        void drawRect(int x0, int x1, int y0, int y1, color_t rectColor);
+
         void drawLine(int x0, int x1, int y0, int y1, color_t lineColor);
 };
 

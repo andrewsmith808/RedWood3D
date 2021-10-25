@@ -1,7 +1,8 @@
 #include "RedWoodEngine.hpp"
 
-// temporary test variable 
+// temporary test variables : MAKE SURE TO DELETE 
 color_t lineColor = {0xFFFFFFFF};
+color_t rectColor = {0xFFFF8972};
 
 RedWoodEngine::RedWoodEngine() {
     // Set width and height of the SDL window with the max screen resolution
@@ -52,5 +53,6 @@ void RedWoodEngine::processInput() {
 void RedWoodEngine::update() {
     display->drawGrid();
     display->drawLine(0, 1920, 0, 1080, lineColor);
+    display->drawRect(960, 540, 100, 200, rectColor);
 }
 

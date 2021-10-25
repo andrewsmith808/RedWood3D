@@ -115,6 +115,17 @@ void Display::drawGrid() {
     }
 }
 
+void Display::drawRect(int x, int y, int width, int height, color_t rectColor) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            int currX = x + i;
+            int currY = y + j;
+            drawPixel(currX, currY, rectColor);
+        }
+    }
+}
+
+
 void Display::drawLine(int x0, int x1, int y0, int y1, color_t lineColor) {
     int deltaX = x1 - x0;
     int deltaY = y1 - y0;
