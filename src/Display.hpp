@@ -38,7 +38,7 @@ class Display {
 
         void drawPixel(int x, int y, color_t pixelColor);
 
-        void drawGrid(color_t gridColor);
+        void drawGrid();
 };
 
 
