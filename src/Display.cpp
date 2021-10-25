@@ -55,11 +55,13 @@ bool Display::initializeWindow() {
 }
 
 void Display::render() {
+    color_t clearColor = {0xFF696969};
+
     SDL_RenderClear(renderer);
 
     renderColorBuffer();
 
-    clearColorBuffer(0xFF696969);
+    clearColorBuffer(clearColor);
 
     SDL_RenderPresent(renderer);
 }
@@ -89,10 +91,10 @@ void Display::renderColorBuffer() {
     SDL_RenderCopy(renderer, colorBufferTexture, nullptr, nullptr);
 }
 
-void Display::clearColorBuffer(unsigned int color) {
+void Display::clearColorBuffer(color_t color) {
     for (int height = 0; height < windowHeight; height++) {
         for (int width = 0; width < windowWidth; width++) {
-            colorBuffer[(windowWidth * height) + width] = color;
+            colorBuffer[(windowWidth * height) + width] = color.color;
         }
     }
 
