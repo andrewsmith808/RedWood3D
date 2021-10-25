@@ -1,0 +1,117 @@
+#include "Display.hpp"
+
+Display::Display() {
+    // Set width and height of the SDL window with the max screen resolution
+    SDL_DisplayMode display_mode;
+    SDL_GetCurrentDisplayMode(0, &display_mode);
+    windowWidth = display_mode.w;
+    windowHeight = display_mode.h;
+    isRunning = false;
+    colorBuffer = nullptr;
+    colorBufferTexture = nullptr;
+}
+
+Display::Display(int windowWidth, int windowHeight) :
+    windowWidth(windowWidth),
+    windowHeight(windowHeight),
+    window(nullptr),
+    renderer(nullptr),
+    isRunning(false),
+    colorBuffer(nullptr),
+    colorBufferTexture(nullptr) {}
+
+Display::~Display() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
+bool Display::initializeWindow() {
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        fprintf(stderr, "Error initializing SDL.\n");
+        return false;
+    }
+
+    // Create a SDL Window
+    window = SDL_CreateWindow(
+        NULL,
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        windowWidth,
+        windowHeight,
+        SDL_WINDOW_BORDERLESS
+    );
+    if (!window) {
+        fprintf(stderr, "Error creating SDL window.\n");
+        return false;
+    }
+
+    // Create a SDL renderer
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    if (!renderer) {
+        fprintf(stderr, "Error creating SDL renderer.\n");
+        return false;
+    }
+
+    return true;
+}
+
+void Display::render() {
+    SDL_RenderClear(renderer);
+
+    renderColorBuffer();
+
+    clearColorBuffer(0xFF000000);
+
+    SDL_RenderPresent(renderer);
+}
+
+void Display::processInput() {
+    SDL_Event event;
+
+    while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case SDL_KEYDOWN:
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+				    isRunning = false;
+				    break;
+                }            
+            default:
+                break;
+        }
+    }
+}
+
+void Display::setup() {
+
+    // allocate memory for the color buffer
+    colorBuffer = (unsigned int*)malloc(sizeof(unsigned int) * windowWidth * windowHeight);
+
+    // Creating a SDL texture that is used to display the color buffer
+    colorBufferTexture = SDL_CreateTexture(
+        renderer,
+        SDL_PIXELFORMAT_RGBA32,
+        SDL_TEXTUREACCESS_STREAMING,
+        windowWidth,
+        windowHeight
+    );
+}
+
+void Display::renderColorBuffer() {
+    SDL_UpdateTexture(
+        colorBufferTexture,
+        nullptr,
+        colorBuffer,
+        (int)(windowWidth * sizeof(unsigned int))
+    );
+    SDL_RenderCopy(renderer, colorBufferTexture, nullptr, nullptr);
+}
+
+void Display::clearColorBuffer(unsigned int color) {
+    for (int height = 0; height < windowHeight; height++) {
+        for (int width = 0; width < windowWidth; width++) {
+            colorBuffer[(windowWidth * height) + width] = color;
+        }
+    }
+
+}
