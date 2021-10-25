@@ -24,6 +24,8 @@ class RedWoodEngine {
     
     private:
         void processInput();
+
+        void update();
 };
 
 #endif // __RED_WOOD_ENGINE_HPP__

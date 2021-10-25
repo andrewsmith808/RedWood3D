@@ -25,6 +25,7 @@ void RedWoodEngine::run() {
 
     while(isRunning) {
         processInput();
+        update();
         display->render();
     }
 }
@@ -43,5 +44,9 @@ void RedWoodEngine::processInput() {
                 break;
         }
     }
+}
+
+void RedWoodEngine::update() {
+    display->drawGrid();
 }
 
