@@ -35,6 +35,8 @@ class Display {
         void renderColorBuffer();
 
         void clearColorBuffer(color_t color);
+
+        void drawPixel(int x, int y, color_t pixelColor);
 };
 
 

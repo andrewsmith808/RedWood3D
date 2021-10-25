@@ -99,3 +99,9 @@ void Display::clearColorBuffer(color_t color) {
     }
 
 }
+
+void Display::drawPixel(int x, int y, color_t pixelColor) {
+    if (x >= 0 && x < windowWidth && y >= 0 && y < windowHeight) {
+        colorBuffer[(windowWidth * y) + x] = pixelColor.color;
+    }
+}
