@@ -3,6 +3,9 @@
 
 #include <SDL2/SDL.h>
 
+const int FPS = 30;
+const int TARGET_FRAME_TIME = 1000 / FPS;
+
 class RedWoodEngine {
     private:
         int windowWidth;
