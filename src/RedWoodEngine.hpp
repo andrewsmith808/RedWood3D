@@ -12,6 +12,10 @@ class RedWoodEngine {
         SDL_Renderer* renderer;
 
         bool isRunning;
+
+        unsigned int* colorBuffer;
+        SDL_Texture* colorBufferTexture;
+
     public:
         // produce a fullscreen window
         RedWoodEngine();
@@ -22,12 +26,19 @@ class RedWoodEngine {
         ~RedWoodEngine();
 
         void run();
-
+    
+    private:
         bool initializeWindow();
 
         void render();
 
         void processInput();
+
+        void setup();
+
+        void renderColorBuffer();
+
+        void clearColorBuffer(unsigned int color);
 };
 
 #endif // __RED_WOOD_ENGINE_HPP__

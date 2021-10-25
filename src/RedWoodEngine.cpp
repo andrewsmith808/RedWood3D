@@ -7,6 +7,8 @@ RedWoodEngine::RedWoodEngine() {
     windowWidth = display_mode.w;
     windowHeight = display_mode.h;
     isRunning = false;
+    colorBuffer = nullptr;
+    colorBufferTexture = nullptr;
 }
 
 RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) :
@@ -14,7 +16,9 @@ RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) :
     windowHeight(windowHeight),
     window(nullptr),
     renderer(nullptr),
-    isRunning(false) {}
+    isRunning(false),
+    colorBuffer(nullptr),
+    colorBufferTexture(nullptr) {}
 
 RedWoodEngine::~RedWoodEngine() {
     SDL_DestroyRenderer(renderer);
@@ -25,6 +29,8 @@ RedWoodEngine::~RedWoodEngine() {
 void RedWoodEngine::run() {
     
     isRunning = initializeWindow();
+
+    setup();
 
     while(isRunning) {
         processInput();
@@ -64,8 +70,11 @@ bool RedWoodEngine::initializeWindow() {
 }
 
 void RedWoodEngine::render() {
-    SDL_SetRenderDrawColor(renderer, 69, 69, 69, 69);
     SDL_RenderClear(renderer);
+
+    renderColorBuffer();
+
+    clearColorBuffer(0xFF696969);
 
     SDL_RenderPresent(renderer);
 }
@@ -85,3 +94,38 @@ void RedWoodEngine::processInput() {
         }
     }
 }
+
+void RedWoodEngine::setup() {
+
+    // allocate memory for the color buffer
+    colorBuffer = (unsigned int*)malloc(sizeof(unsigned int) * windowWidth * windowHeight);
+
+    // Creating a SDL texture that is used to display the color buffer
+    colorBufferTexture = SDL_CreateTexture(
+        renderer,
+        SDL_PIXELFORMAT_RGBA32,
+        SDL_TEXTUREACCESS_STREAMING,
+        windowWidth,
+        windowHeight
+    );
+}
+
+void RedWoodEngine::renderColorBuffer() {
+    SDL_UpdateTexture(
+        colorBufferTexture,
+        nullptr,
+        colorBuffer,
+        (int)(windowWidth * sizeof(unsigned int))
+    );
+    SDL_RenderCopy(renderer, colorBufferTexture, nullptr, nullptr);
+}
+
+void RedWoodEngine::clearColorBuffer(unsigned int color) {
+    for (int height = 0; height < windowHeight; height++) {
+        for (int width = 0; width < windowWidth; width++) {
+            colorBuffer[(windowWidth * height) + width] = color;
+        }
+    }
+
+}
+
