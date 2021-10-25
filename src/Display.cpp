@@ -114,3 +114,27 @@ void Display::drawGrid() {
         }
     }
 }
+
+void Display::drawLine(int x0, int x1, int y0, int y1, color_t lineColor) {
+    int deltaX = x1 - x0;
+    int deltaY = y1 - y0;
+
+    int longestSide = 0;
+
+    if (abs(deltaX) >= abs(deltaY))
+        longestSide = abs(deltaX);
+    else
+        longestSide = abs(deltaY);
+    
+    double dx = deltaX / double(longestSide);
+    double dy = deltaY / double(longestSide);
+
+    double currX = x0;
+    double currY = y0;
+
+    for (int i = 0; i <= longestSide; i++) {
+        drawPixel(round(currX), round(currY), lineColor);
+        currX += dx;
+        currY += dy;
+    }
+}

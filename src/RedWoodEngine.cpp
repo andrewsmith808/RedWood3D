@@ -1,5 +1,8 @@
 #include "RedWoodEngine.hpp"
 
+// temporary test variable 
+color_t lineColor = {0xFFFFFFFF};
+
 RedWoodEngine::RedWoodEngine() {
     // Set width and height of the SDL window with the max screen resolution
     SDL_DisplayMode display_mode;
@@ -48,5 +51,6 @@ void RedWoodEngine::processInput() {
 
 void RedWoodEngine::update() {
     display->drawGrid();
+    display->drawLine(0, 1920, 0, 1080, lineColor);
 }
 

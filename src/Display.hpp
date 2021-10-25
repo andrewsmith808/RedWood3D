@@ -39,6 +39,8 @@ class Display {
         void drawPixel(int x, int y, color_t pixelColor);
 
         void drawGrid();
+
+        void drawLine(int x0, int x1, int y0, int y1, color_t lineColor);
 };
 
 
