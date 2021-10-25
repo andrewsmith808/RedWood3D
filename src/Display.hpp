@@ -11,8 +11,6 @@ class Display {
         SDL_Window* window;
         SDL_Renderer* renderer;
 
-        bool isRunning;
-
         unsigned int* colorBuffer;
         SDL_Texture* colorBufferTexture;
     public:
@@ -22,11 +20,11 @@ class Display {
         // set a custom window height and width
         Display(int windowWidth, int windowHeight);
 
+        ~Display();
+
         bool initializeWindow();
 
         void render();
-
-        void processInput();
 
         void setup();
 

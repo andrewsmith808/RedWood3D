@@ -6,7 +6,6 @@ Display::Display() {
     SDL_GetCurrentDisplayMode(0, &display_mode);
     windowWidth = display_mode.w;
     windowHeight = display_mode.h;
-    isRunning = false;
     colorBuffer = nullptr;
     colorBufferTexture = nullptr;
 }
@@ -16,14 +15,13 @@ Display::Display(int windowWidth, int windowHeight) :
     windowHeight(windowHeight),
     window(nullptr),
     renderer(nullptr),
-    isRunning(false),
     colorBuffer(nullptr),
     colorBufferTexture(nullptr) {}
 
 Display::~Display() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    SDL_Quit();
+    delete colorBuffer;
 }
 
 bool Display::initializeWindow() {
@@ -61,25 +59,9 @@ void Display::render() {
 
     renderColorBuffer();
 
-    clearColorBuffer(0xFF000000);
+    clearColorBuffer(0xFF696969);
 
     SDL_RenderPresent(renderer);
-}
-
-void Display::processInput() {
-    SDL_Event event;
-
-    while (SDL_PollEvent(&event)) {
-		switch (event.type) {
-			case SDL_KEYDOWN:
-                if (event.key.keysym.sym == SDLK_ESCAPE) {
-				    isRunning = false;
-				    break;
-                }            
-            default:
-                break;
-        }
-    }
 }
 
 void Display::setup() {
