@@ -105,3 +105,11 @@ void Display::drawPixel(int x, int y, color_t pixelColor) {
         colorBuffer[(windowWidth * y) + x] = pixelColor.color;
     }
 }
+
+void Display::drawGrid(color_t gridColor) {
+    for (int y = 0; y < windowHeight; y += 10) {
+        for (int x = 0; x < windowWidth; x += 10) {
+            drawPixel(x, y, gridColor);
+        }
+    }
+}
