@@ -3,6 +3,10 @@
 
 #include <SDL2/SDL.h>
 
+typedef struct {
+    unsigned int color;
+} color_t;
+
 class Display {
     private:
         int windowWidth;
@@ -30,8 +34,15 @@ class Display {
 
         void renderColorBuffer();
 
-        void clearColorBuffer(unsigned int color);
+        void clearColorBuffer(color_t color);
 
+        void drawPixel(int x, int y, color_t pixelColor);
+
+        void drawGrid();
+
+        void drawRect(int x0, int x1, int y0, int y1, color_t rectColor);
+
+        void drawLine(int x0, int x1, int y0, int y1, color_t lineColor);
 };
 
 

@@ -2,7 +2,7 @@
 
 int main() {
 
-    RedWoodEngine* instance = new RedWoodEngine(1920, 1200);
+    RedWoodEngine* instance = new RedWoodEngine(1920, 1080);
 
     instance->run();
 

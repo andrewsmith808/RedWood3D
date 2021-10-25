@@ -55,11 +55,13 @@ bool Display::initializeWindow() {
 }
 
 void Display::render() {
+    color_t clearColor = {0xFF101010};
+
     SDL_RenderClear(renderer);
 
     renderColorBuffer();
 
-    clearColorBuffer(0xFF696969);
+    clearColorBuffer(clearColor);
 
     SDL_RenderPresent(renderer);
 }
@@ -89,11 +91,61 @@ void Display::renderColorBuffer() {
     SDL_RenderCopy(renderer, colorBufferTexture, nullptr, nullptr);
 }
 
-void Display::clearColorBuffer(unsigned int color) {
+void Display::clearColorBuffer(color_t color) {
     for (int height = 0; height < windowHeight; height++) {
         for (int width = 0; width < windowWidth; width++) {
-            colorBuffer[(windowWidth * height) + width] = color;
+            colorBuffer[(windowWidth * height) + width] = color.color;
         }
     }
 
+}
+
+void Display::drawPixel(int x, int y, color_t pixelColor) {
+    if (x >= 0 && x < windowWidth && y >= 0 && y < windowHeight) {
+        colorBuffer[(windowWidth * y) + x] = pixelColor.color;
+    }
+}
+
+void Display::drawGrid() {
+    color_t gridColor = {0x69696969};
+    for (int y = 0; y < windowHeight; y += 20) {
+        for (int x = 0; x < windowWidth; x += 20) {
+            drawPixel(x, y, gridColor);
+        }
+    }
+}
+
+void Display::drawRect(int x, int y, int width, int height, color_t rectColor) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            int currX = x + i;
+            int currY = y + j;
+            drawPixel(currX, currY, rectColor);
+        }
+    }
+}
+
+
+void Display::drawLine(int x0, int x1, int y0, int y1, color_t lineColor) {
+    int deltaX = x1 - x0;
+    int deltaY = y1 - y0;
+
+    int longestSide = 0;
+
+    if (abs(deltaX) >= abs(deltaY))
+        longestSide = abs(deltaX);
+    else
+        longestSide = abs(deltaY);
+    
+    double dx = deltaX / double(longestSide);
+    double dy = deltaY / double(longestSide);
+
+    double currX = x0;
+    double currY = y0;
+
+    for (int i = 0; i <= longestSide; i++) {
+        drawPixel(round(currX), round(currY), lineColor);
+        currX += dx;
+        currY += dy;
+    }
 }
