@@ -32,14 +32,47 @@ void Vec3::mul(double factor) {
     z *= factor;
 }
 
-void div(double factor) {
-    x /= facotr;
-    y /= facotr;
+void Vec3::div(double factor) {
+    x /= factor;
+    y /= factor;
     z /= factor;
 }
-void normalize() {
+void Vec3::normalize() {
     double length = this->length();
     x /= length;
     y /= length;
     z /= length;
+}
+
+Vec3 Vec3::cross(const Vec3& v) {
+    Vec3 result (
+        this->y * v.z - this->z * v.y,
+        this->z * v.x - this->x * v.z,
+        this->x * v.y - this->y * v.x
+    );
+    return result;
+}
+Vec3 Vec3::rotateX(double angle) {
+    Vec3 rotatedVector (
+        this->x,
+        this->y * cos(angle) - this->z * sin(angle),
+        this->y * sin(angle) + this->z * cos(angle)
+    );
+    return rotatedVector;
+}
+Vec3 Vec3::rotateY(double angle) {
+    Vec3 rotatedVector(
+        this->x * cos(angle) + this->z * sin(angle),
+        this->y,
+        this->-x * sin(angle) + this->z * cos(angle)
+    );
+    return rotatedVector;
+}
+Vec3 Vec3::rotateZ(double angle) {
+    vec3_t rotatedVector(
+        this->x * cos(angle) - this->y * sin(angle),
+        this->x * sin(angle) + this->y * cos(angle),
+        this->z
+    );
+    return rotatedVector;
 }
