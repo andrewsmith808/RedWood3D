@@ -11,8 +11,11 @@ class Vec4 {
         Vec4();
         Vec4(double x, double y, double z, double w);
         ~Vec4();
-        Vec3 convertToVec3(const Vec4& v);
-        Vec2 convertToVec2(const Vec4& v);
 };
+
+// global conversion functions
+Vec3 convertToVec3(const Vec4& v);
+Vec2 convertToVec2(const Vec4& v);
+Vec4 convertToVec4(const Vec3& v);
 
 #endif // __VEC4_HPP__
