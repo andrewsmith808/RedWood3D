@@ -13,6 +13,14 @@ Vec2::~Vec2() {
     delete this;
 }
 
+double Vec2::getX() const {
+    return x;
+}
+
+double Vec2::getY() const {
+    return y;
+}
+
 double Vec2::length() {
     return sqrt(x * x + y * y);
 }

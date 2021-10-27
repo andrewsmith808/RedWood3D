@@ -11,6 +11,11 @@ class Vec4 {
         Vec4();
         Vec4(double x, double y, double z, double w);
         ~Vec4();
+
+        double getX() const;
+        double getY() const;
+        double getZ() const;
+        double getW() const;
 };
 
 // global conversion functions

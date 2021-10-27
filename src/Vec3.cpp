@@ -11,6 +11,18 @@ Vec3::~Vec3() {
     // no dynamic memory allocated, default behavior
 }
 
+double Vec3::getX() const {
+    return x;
+}
+
+double Vec3::getY() const {
+    return y;
+}
+
+double Vec3::getZ() const {
+    return z;
+}
+
 double Vec3::length() {
     return sqrt(x * x + y * y + z * z);
 }

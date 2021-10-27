@@ -11,16 +11,32 @@ Vec4::~Vec4() {
 }
 
 Vec3 Vec4_To_Vec3(const Vec4& v) {
-    Vec3 result(v.x, v.y, v.z);
+    Vec3 result(v.getX(), v.getY(), v.getZ());
     return result;
 }
 
 Vec2 Vec4_To_Vec2(const Vec4& v) {
-    Vec2 result(v.x, v.y);
+    Vec2 result(v.getX(), v.getY());
     return result;
 }
 
 Vec4 Vec3_To_Vec4(const Vec3& v) {
-    Vec4 result(v.x, v.y, v.z, 1.0);
+    Vec4 result(v.getX(), v.getY(), v.getZ(), 1.0);
     return result;
+}
+
+double Vec4::getX() const {
+    return x;
+}
+
+double Vec4::getY() const {
+    return y;
+}
+
+double Vec4::getZ() const {
+    return z;
+}
+
+double Vec4::getW() const {
+    return w;
 }

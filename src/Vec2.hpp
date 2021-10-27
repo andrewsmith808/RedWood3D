@@ -8,6 +8,10 @@ class Vec2 {
         Vec2();
         Vec2(double x, double y);
         ~Vec2();
+
+        double getX() const;
+        double getY() const;
+
         double length();
         void add(const Vec2& v);
         void sub(const Vec2& v);

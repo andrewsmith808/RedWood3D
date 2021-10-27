@@ -8,6 +8,11 @@ class Vec3 {
         Vec3();
         Vec3(double x, double y, double z);
         ~Vec3();
+
+        double getX() const;
+        double getY() const;
+        double getZ() const;
+
         double length();
         void add(const Vec3& v);
         void sub(const Vec3& v);
