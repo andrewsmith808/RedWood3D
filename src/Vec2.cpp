@@ -1,4 +1,4 @@
-#include "vec.hpp"
+#include "vec2.hpp"
 #include <cmath>
 
 // Implementations of Vec2 functions
