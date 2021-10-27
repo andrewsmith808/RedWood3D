@@ -14,8 +14,8 @@ class Vec4 {
 };
 
 // global conversion functions
-Vec3 convertToVec3(const Vec4& v);
-Vec2 convertToVec2(const Vec4& v);
-Vec4 convertToVec4(const Vec3& v);
+Vec3 Vec4_To_Vec3(const Vec4& v);
+Vec2 Vec4_To_Vec2(const Vec4& v);
+Vec4 Vec3_To_Vec4(const Vec3& v);
 
 #endif // __VEC4_HPP__
