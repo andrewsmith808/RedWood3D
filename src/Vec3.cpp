@@ -8,7 +8,7 @@ Vec3::Vec3(double x, double y, double z) :
     x(x), y(y), z(z) {}
 
 Vec3::~Vec3() {
-    delete this;
+    // no dynamic memory allocated, default behavior
 }
 
 double Vec3::length() {
@@ -44,6 +44,10 @@ void Vec3::normalize() {
     z /= length;
 }
 
+double Vec3::dot(const Vec3& v) {
+    return x * v.x + y * v.y + z * v.z;
+}
+
 Vec3 Vec3::cross(const Vec3& v) {
     Vec3 result (
         this->y * v.z - this->z * v.y,
@@ -64,12 +68,12 @@ Vec3 Vec3::rotateY(double angle) {
     Vec3 rotatedVector(
         this->x * cos(angle) + this->z * sin(angle),
         this->y,
-        this->-x * sin(angle) + this->z * cos(angle)
+        -this->x * sin(angle) + this->z * cos(angle)
     );
     return rotatedVector;
 }
 Vec3 Vec3::rotateZ(double angle) {
-    vec3_t rotatedVector(
+    Vec3 rotatedVector(
         this->x * cos(angle) - this->y * sin(angle),
         this->x * sin(angle) + this->y * cos(angle),
         this->z

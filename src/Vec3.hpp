@@ -14,6 +14,7 @@ class Vec3 {
         void div(double factor);
         void normalize();
         void mul(double factor);
+        double dot(const Vec3& v);
         Vec3 cross(const Vec3& v);
         Vec3 rotateX(double angle);
         Vec3 rotateY(double angle);
