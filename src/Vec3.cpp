@@ -12,7 +12,7 @@ Vec3::~Vec3() {
 }
 
 double Vec3::length() {
-    return sqrt(x*x + y*y + z*z);
+    return sqrt(x * x + y * y + z * z);
 }
 
 void Vec3::add(const Vec3& v) {
