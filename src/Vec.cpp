@@ -1,6 +1,58 @@
-#include "Vec3.hpp"
+#include "Vec.hpp"
 #include <cmath>
 
+// Implementations of Vec2 functions
+
+Vec2::Vec2() :
+    x(0), y(0) {}
+
+Vec2::Vec2(double x, double y) :
+    x(x), y(y) {}
+
+Vec2::~Vec2() {
+    delete this;
+}
+
+double Vec2::getX() const {
+    return x;
+}
+
+double Vec2::getY() const {
+    return y;
+}
+
+double Vec2::length() {
+    return sqrt(x * x + y * y);
+}
+
+void Vec2::add(const Vec2& v) {
+    x = x + v.x;
+    y = y + v.y;
+}
+void Vec2::sub(const Vec2& v) {
+    x = x - v.x;
+    y = y - v.y;
+}
+void Vec2::mul(double factor) {
+    x = x * factor;
+    y = y * factor;
+}
+void Vec2::div(double factor) {
+    x = x / factor;
+    y = y / factor;
+}
+
+double Vec2::dot(const Vec2& v) {
+    return x * v.x + y * v.y;
+}
+
+void Vec2::normalize() {
+    double length = this->length();
+    x = x / length;
+    y = y / length;
+}
+
+// Implementation of Vec3 functions
 Vec3::Vec3() :
     x(0), y(0), z(0) {}
 
@@ -91,4 +143,46 @@ Vec3 Vec3::rotateZ(double angle) {
         this->z
     );
     return rotatedVector;
+}
+
+// Implemntation of Vec4 functions
+Vec4::Vec4() :
+    x(0), y(0), z(0), w(1) {}
+
+Vec4::Vec4(double x, double y, double z, double w) :
+    x(x), y(y), z(z), w(w) {}
+
+Vec4::~Vec4() {
+    // no dynamically allocated memory default behavior
+}
+
+Vec3 Vec4_To_Vec3(const Vec4& v) {
+    Vec3 result(v.getX(), v.getY(), v.getZ());
+    return result;
+}
+
+Vec2 Vec4_To_Vec2(const Vec4& v) {
+    Vec2 result(v.getX(), v.getY());
+    return result;
+}
+
+Vec4 Vec3_To_Vec4(const Vec3& v) {
+    Vec4 result(v.getX(), v.getY(), v.getZ(), 1.0);
+    return result;
+}
+
+double Vec4::getX() const {
+    return x;
+}
+
+double Vec4::getY() const {
+    return y;
+}
+
+double Vec4::getZ() const {
+    return z;
+}
+
+double Vec4::getW() const {
+    return w;
 }
