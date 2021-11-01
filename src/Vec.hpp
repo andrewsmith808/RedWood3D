@@ -35,7 +35,7 @@ class Vec3 {
 
         double length();
         void add(const Vec3& v);
-        void sub(const Vec3& v);
+        Vec3 sub(const Vec3& v);
         void div(double factor);
         void normalize();
         void mul(double factor);
@@ -58,6 +58,11 @@ class Vec4 {
         double getY() const;
         double getZ() const;
         double getW() const;
+
+        void setX(double value);
+        void setY(double value);
+        void setZ(double value);
+        void setW(double value);
 };
 
 // global conversion functions

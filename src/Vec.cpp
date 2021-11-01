@@ -84,10 +84,13 @@ void Vec3::add(const Vec3& v) {
     y = y + v.y;
     z = z + v.z;
 }
-void Vec3::sub(const Vec3& v) {
-    x = x - v.x;
-    y = y - v.y;
-    z = z - v.z;
+Vec3 Vec3::sub(const Vec3& v) {
+    double X = x - v.x;
+    double Y = y - v.y;
+    double Z = z - v.z;
+
+    Vec3 result(X, Y, Z);
+    return result;
 }
 
 void Vec3::mul(double factor) {
@@ -185,4 +188,17 @@ double Vec4::getZ() const {
 
 double Vec4::getW() const {
     return w;
+}
+
+void Vec4::setX(double value) {
+    x = value;
+}
+void Vec4::setY(double value) {
+    y = value;
+}
+void Vec4::setZ(double value) {
+    z = value;
+}
+void Vec4::setW(double value) {
+    w = value;
 }
