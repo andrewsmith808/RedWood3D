@@ -2,39 +2,44 @@
 #define __MATRIX4_HPP__
 
 #include "Vec.hpp"
+#include <iostream>
 
 class Matrix4 {
     private:
         double mat4[4][4];
     
     public:
-        Matrix();
+        Matrix4();
 
-        ~Matrix();
-
-        double getElement(int index1, int index2);
-
-        double setElement(int index1, int index2);
+        ~Matrix4();
 
         void identity();
 
-        void scale(double sx, double sy, double sz);
+        void zero();
 
-        void translate(double tx, double ty, double tz);
+        double getElement(int index1, int index2) const;
 
-        void rotateX(double angle);
+        void setElement(int index1, int index2, double value);
 
-        void rotateY(double angle);
+        Matrix4 scale(double sx, double sy, double sz);
 
-        void rotateZ(double angle);
+        Matrix4 translate(double tx, double ty, double tz);
 
-        void perspective(double fov, double aspect, double znear, double zfar);
+        Matrix4 rotateX(double angle);
 
-        void mulVec4(const Vec4& v);
+        Matrix4 rotateY(double angle);
 
-        void mulMatrix(Matrix4 m);
+        Matrix4 rotateZ(double angle);
 
-        void lookAt(Vec3 eye, Vec3 target, Vec3 up);
+        Matrix4 perspective(double fov, double aspect, double znear, double zfar);
+
+        Vec4 mulVec4(const Vec4& v);
+
+        Matrix4 mulMatrix(Matrix4 m);
+
+        Matrix4 lookAt(Vec3 eye, Vec3 target, Vec3 up);
+
+        friend std::ostream& operator<<(std::ostream& out, const Matrix4& rhs);
 
 };
 
