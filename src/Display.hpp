@@ -3,9 +3,16 @@
 
 #include <SDL2/SDL.h>
 
+const int DEFAULT_PIXEL_COLOR = 0xFFFFFFFF;
+
 typedef struct {
     unsigned int color;
 } color_t;
+
+typedef struct {
+    int x, y;
+    color_t pixelColor;
+} pixel_t;
 
 class Display {
     private:
@@ -36,7 +43,7 @@ class Display {
 
         void clearColorBuffer(color_t color);
 
-        void drawPixel(int x, int y, color_t pixelColor);
+        void drawPixel(pixel_t pixel);
 
         void drawGrid();
 

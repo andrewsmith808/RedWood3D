@@ -100,9 +100,9 @@ void Display::clearColorBuffer(color_t color) {
 
 }
 
-void Display::drawPixel(int x, int y, color_t pixelColor) {
-    if (x >= 0 && x < windowWidth && y >= 0 && y < windowHeight) {
-        colorBuffer[(windowWidth * y) + x] = pixelColor.color;
+void Display::drawPixel(pixel_t pixel) {
+    if (pixel.x >= 0 && pixel.x < windowWidth && pixel.y >= 0 && pixel.y < windowHeight) {
+        colorBuffer[(windowWidth * pixel.y) + pixel.x] = pixel.pixelColor.color;
     }
 }
 
@@ -110,7 +110,8 @@ void Display::drawGrid() {
     color_t gridColor = {0x69696969};
     for (int y = 0; y < windowHeight; y += 20) {
         for (int x = 0; x < windowWidth; x += 20) {
-            drawPixel(x, y, gridColor);
+            pixel_t pixel = {x, y, gridColor};
+            drawPixel(pixel);
         }
     }
 }
@@ -120,7 +121,8 @@ void Display::drawRect(int x, int y, int width, int height, color_t rectColor) {
         for (int j = 0; j < height; j++) {
             int currX = x + i;
             int currY = y + j;
-            drawPixel(currX, currY, rectColor);
+            pixel_t pixel = {currX, currY, rectColor};
+            drawPixel(pixel);
         }
     }
 }
@@ -144,7 +146,8 @@ void Display::drawLine(int x0, int x1, int y0, int y1, color_t lineColor) {
     double currY = y0;
 
     for (int i = 0; i <= longestSide; i++) {
-        drawPixel(round(currX), round(currY), lineColor);
+        pixel_t pixel = {round(currX), round(currY), lineColor};
+        drawPixel(pixel);
         currX += dx;
         currY += dy;
     }
