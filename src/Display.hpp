@@ -9,11 +9,6 @@ typedef struct {
     unsigned int color;
 } color_t;
 
-typedef struct {
-    int x, y;
-    color_t pixelColor;
-} pixel_t;
-
 class Display {
     private:
         int windowWidth;
@@ -43,13 +38,15 @@ class Display {
 
         void clearColorBuffer(color_t color);
 
-        void drawPixel(pixel_t pixel);
+        void drawPixel(int x, int y, color_t pixelColor);
 
         void drawGrid();
 
         void drawRect(int x, int y, int width, int height, color_t rectColor);
 
         void drawLine(int x0, int x1, int y0, int y1, color_t lineColor);
+
+
 };
 
 
