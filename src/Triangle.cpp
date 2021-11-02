@@ -61,13 +61,11 @@ void Triangle::drawTrianglePixel(int x, int y, Display* display, color_t triangl
 
     interpolatedReciprocalW = 1.0 - interpolatedReciprocalW;
 
-    // TODO:: Implement zBuffer and display functions
+    if (interpolatedReciprocalW < display->getZBufferAt((display->getWindowWidth() * y) + x)) {
+        display->drawPixel(x, y, trianglePixelColor);
 
-    // if (interpolatedReciprocalW < display->atZbuffer((display->getWindowWidth() * y) + x)) {
-    //     display->drawPixel(x, y, trianglePixelColor);
-
-    //     display->setZbuffer((display->getWindowWidth() * y) + x, interpolatedReciprocalW);
-    // }
+        display->setZbufferAt((display->getWindowWidth() * y) + x, interpolatedReciprocalW);
+    }
 }
 
 void Triangle::renderFlatBottom(Display* display, color_t triangleColor) {
