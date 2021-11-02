@@ -8,6 +8,7 @@ Display::Display() {
     windowHeight = display_mode.h;
     colorBuffer = nullptr;
     colorBufferTexture = nullptr;
+    zBuffer = nullptr;
 }
 
 Display::Display(int windowWidth, int windowHeight) :
@@ -16,7 +17,8 @@ Display::Display(int windowWidth, int windowHeight) :
     window(nullptr),
     renderer(nullptr),
     colorBuffer(nullptr),
-    colorBufferTexture(nullptr) {}
+    colorBufferTexture(nullptr),
+    zBuffer(nullptr) {}
 
 Display::~Display() {
     SDL_DestroyRenderer(renderer);

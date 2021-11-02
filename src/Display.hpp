@@ -19,6 +19,8 @@ class Display {
 
         unsigned int* colorBuffer;
         SDL_Texture* colorBufferTexture;
+
+        double* zBuffer;
     public:
         // produce a fullscreen window
         Display();
