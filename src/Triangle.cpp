@@ -25,9 +25,23 @@ void Triangle::drawFilledTriangle(Display* display, color_t triangleColor) {
 
 }
 
+Vec3 Triangle::barycentricWeights(Vec2 a, Vec2 b, Vec2 c, Vec2 p) {
+    // TODO:: Calculate barycentric weights to determine depth pixel value
+
+    Vec3 temporaryReturnValue(-1, -1, -1);
+
+    return temporaryReturnValue;
+}
+
 void Triangle::drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor) {
     // TODO:: Implement DEPTH INTERPOLATION drawing of pixel for triangle
 
+    Vec2 pixel(x, y);
+    Vec2 pointA = Vec4_To_Vec2(points[0]);
+    Vec2 pointB = Vec4_To_Vec2(points[1]);
+    Vec2 PointC = Vec4_To_Vec2(points[2]);
+
+    
 }
 
 void Triangle::renderFlatBottom(Display* display, color_t triangleColor) {
