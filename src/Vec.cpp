@@ -29,9 +29,11 @@ void Vec2::add(const Vec2& v) {
     x = x + v.x;
     y = y + v.y;
 }
-void Vec2::sub(const Vec2& v) {
-    x = x - v.x;
-    y = y - v.y;
+Vec2 Vec2::sub(const Vec2& v) {
+    double X = x - v.x;
+    double Y = y - v.y;
+    Vec2 result(X, Y);
+    return result;
 }
 void Vec2::mul(double factor) {
     x = x * factor;
