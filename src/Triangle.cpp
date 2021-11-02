@@ -17,16 +17,16 @@ Triangle::~Triangle() {
     // no new memory allocated
 }
 
-void Triangle::drawTrianglePixel(Display* display, color_t trianglePixelColor) {
-    // TODO:: Implement DEPTH INTERPOLATION drawing of pixel for triangle
-    
-}
-
 void Triangle::drawFilledTriangle(Display* display, color_t triangleColor) {
-    // TODO:: Implement FLAT AND TOP TRIANGLE FILLING
+    // TODO:: Implement FLAT BOTTOM AND TOP TRIANGLE FILLING
     sortVerticiesByHeight();
 
     renderFlatBottom(display, triangleColor);
+
+}
+
+void Triangle::drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor) {
+    // TODO:: Implement DEPTH INTERPOLATION drawing of pixel for triangle
 
 }
 
@@ -57,7 +57,7 @@ void Triangle::renderFlatBottom(Display* display, color_t triangleColor) {
             }
 
             for (int x = xStart; x < xEnd; x++) {
-                drawTrianglePixel(display, triangleColor);
+                drawTrianglePixel(x, y, display, triangleColor);
             }
         }
     }

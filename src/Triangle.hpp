@@ -18,8 +18,6 @@ class Triangle {
         Triangle();
         ~Triangle();
 
-        void drawTrianglePixel(Display* display, color_t trianglePixelColor);
-
         void drawFilledTriangle(Display* display, color_t triangleColor);
 
     private:
@@ -30,6 +28,8 @@ class Triangle {
         void sortVerticiesByHeight();
 
         void renderFlatBottom(Display* display, color_t triangleColor);
+
+        void drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor);
         
 };
 
