@@ -40,6 +40,8 @@ class Display {
 
         void clearColorBuffer(color_t color);
 
+        void clearZBuffer();
+
         void drawPixel(int x, int y, color_t pixelColor);
 
         void drawGrid();

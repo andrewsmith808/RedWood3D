@@ -64,14 +64,16 @@ void Display::render() {
     renderColorBuffer();
 
     clearColorBuffer(clearColor);
+    clearZBuffer();
 
     SDL_RenderPresent(renderer);
 }
 
 void Display::setup() {
 
-    // allocate memory for the color buffer
+    // allocate memory for the color buffer and z buffer
     colorBuffer = (unsigned int*)malloc(sizeof(unsigned int) * windowWidth * windowHeight);
+    zBuffer = (double*)malloc(sizeof(double) * windowWidth * windowHeight);
 
     // Creating a SDL texture that is used to display the color buffer
     colorBufferTexture = SDL_CreateTexture(
@@ -100,6 +102,14 @@ void Display::clearColorBuffer(color_t color) {
         }
     }
 
+}
+
+void Display::clearZBuffer() {
+    for (int y = 0; y < windowHeight; y++) {
+        for (int x = 0; x < windowWidth; x++) {
+            zBuffer[(windowWidth * y) + x] = 1.0; 
+        }
+    }
 }
 
 void Display::drawPixel(int x, int y, color_t pixelColor) {
