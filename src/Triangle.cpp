@@ -22,7 +22,6 @@ void Triangle::drawFilledTriangle(Display* display, color_t triangleColor) {
     sortVerticiesByHeight();
 
     renderFlatBottom(display, triangleColor);
-
 }
 
 Vec3 Triangle::barycentricWeights(Vec2 a, Vec2 b, Vec2 c, Vec2 p) {
@@ -50,7 +49,25 @@ void Triangle::drawTrianglePixel(int x, int y, Display* display, color_t triangl
     Vec2 pixel(x, y);
     Vec2 pointA = Vec4_To_Vec2(points[0]);
     Vec2 pointB = Vec4_To_Vec2(points[1]);
-    Vec2 PointC = Vec4_To_Vec2(points[2]);
+    Vec2 pointC = Vec4_To_Vec2(points[2]);
+
+    Vec3 weights = barycentricWeights(pointA, pointB, pointC, pixel);
+
+    double alpha = weights.getX();
+    double beta = weights.getY();
+    double gamma = weights.getZ();
+
+    double interpolatedReciprocalW = (1 / points[0].getW()) * alpha + (1 / points[1].getW()) * beta + (1 / points[2].getW()) * gamma;
+
+    interpolatedReciprocalW = 1.0 - interpolatedReciprocalW;
+
+    // TODO:: Implement zBuffer and display functions
+
+    // if (interpolatedReciprocalW < display->atZbuffer((display->getWindowWidth() * y) + x)) {
+    //     display->drawPixel(x, y, trianglePixelColor);
+
+    //     display->setZbuffer((display->getWindowWidth() * y) + x, interpolatedReciprocalW);
+    // }
 }
 
 void Triangle::renderFlatBottom(Display* display, color_t triangleColor) {
