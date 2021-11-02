@@ -26,11 +26,22 @@ void Triangle::drawFilledTriangle(Display* display, color_t triangleColor) {
 }
 
 Vec3 Triangle::barycentricWeights(Vec2 a, Vec2 b, Vec2 c, Vec2 p) {
-    // TODO:: Calculate barycentric weights to determine depth pixel value
+    Vec2 ab = b.sub(a);
+    Vec2 bc = c.sub(b);
+    Vec2 ac = c.sub(a);
+    Vec2 ap = p.sub(a);
+    Vec2 bp = p.sub(b);
 
-    Vec3 temporaryReturnValue(-1, -1, -1);
+    double areaABC = (ab.getX() * ac.getY() - ab.getY() * ac.getX());
 
-    return temporaryReturnValue;
+    double alpha = (bc.getX() * bp.getY() - bp.getX() * bc.getY() / areaABC);
+
+    double beta = (ap.getX() * ac.getY() - ac.getX() * ap.getY() / areaABC);
+
+    double gamma = 1 - alpha - beta;
+
+    Vec3 weights(alpha, beta, gamma);
+    return weights;
 }
 
 void Triangle::drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor) {
@@ -40,8 +51,6 @@ void Triangle::drawTrianglePixel(int x, int y, Display* display, color_t triangl
     Vec2 pointA = Vec4_To_Vec2(points[0]);
     Vec2 pointB = Vec4_To_Vec2(points[1]);
     Vec2 PointC = Vec4_To_Vec2(points[2]);
-
-    
 }
 
 void Triangle::renderFlatBottom(Display* display, color_t triangleColor) {
