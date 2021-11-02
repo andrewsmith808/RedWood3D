@@ -30,6 +30,14 @@ class Display {
 
         ~Display();
 
+        double getWindowWidth() const;
+        
+        double getWindowHeight() const;
+
+        double getZBufferAt(int index) const;
+
+        void setZbufferAt(int index, double value);
+
         bool initializeWindow();
 
         void render();

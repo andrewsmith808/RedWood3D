@@ -26,6 +26,22 @@ Display::~Display() {
     delete colorBuffer;
 }
 
+double Display::getWindowWidth() const {
+    return windowWidth;
+}
+        
+double Display::getWindowHeight() const {
+    return windowHeight;
+}
+
+double Display::getZBufferAt(int index) const {
+    return zBuffer[index];
+}
+
+void Display::setZbufferAt(int index, double value) {
+    zBuffer[index] = value;
+}
+
 bool Display::initializeWindow() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         fprintf(stderr, "Error initializing SDL.\n");
@@ -136,7 +152,6 @@ void Display::drawRect(int x, int y, int width, int height, color_t rectColor) {
         }
     }
 }
-
 
 void Display::drawLine(int x0, int x1, int y0, int y1, color_t lineColor) {
     int deltaX = x1 - x0;
