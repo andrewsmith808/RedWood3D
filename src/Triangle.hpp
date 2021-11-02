@@ -24,7 +24,12 @@ class Triangle {
 
     private:
         void intSwap(int* a, int* b);
+
         void doubleSwap(double* a, double* b);
+
+        void sortVerticiesByHeight();
+
+        void renderFlatBottom(Display* display, color_t triangleColor);
         
 };
 
