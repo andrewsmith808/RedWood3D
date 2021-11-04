@@ -22,6 +22,8 @@ void Triangle::drawFilledTriangle(Display* display, color_t triangleColor) {
     sortVerticiesByHeight();
 
     renderFlatBottom(display, triangleColor);
+
+    renderFlatTop(display, triangleColor);
 }
 
 Vec3 Triangle::barycentricWeights(Vec2 a, Vec2 b, Vec2 c, Vec2 p) {
@@ -44,8 +46,6 @@ Vec3 Triangle::barycentricWeights(Vec2 a, Vec2 b, Vec2 c, Vec2 p) {
 }
 
 void Triangle::drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor) {
-    // TODO:: Implement DEPTH INTERPOLATION drawing of pixel for triangle
-
     Vec2 pixel(x, y);
     Vec2 pointA = Vec4_To_Vec2(points[0]);
     Vec2 pointB = Vec4_To_Vec2(points[1]);
@@ -100,6 +100,41 @@ void Triangle::renderFlatBottom(Display* display, color_t triangleColor) {
         }
     }
 }
+
+void Triangle::renderFlatTop(Display* display, color_t triangleColor) {
+    double inverseSlope1 = 0.0;
+    double inverseSlope2 = 0.0;
+
+    // cast to int to specify pixel coordinates in color buffer
+    int x0 = static_cast<int>(points[0].getX());
+    int y0 = static_cast<int>(points[0].getY());
+    int x1 = static_cast<int>(points[1].getX());
+    int y1 = static_cast<int>(points[1].getY());
+    int x2 = static_cast<int>(points[2].getX());
+    int y2 = static_cast<int>(points[2].getY());
+
+    if (y2 - y1 != 0) 
+        inverseSlope1 = (double)(x2 - x1) / abs(y2 - y1);
+    if (y2 - y0 != 0) 
+        inverseSlope2 = (double)(x2 - x0) / abs(y2 - y0);
+
+    if (y2 - y1 != 0) {
+        for (int y = y1; y <= y2; y++) {
+            int xStart = x1 + (y - y1) * inverseSlope1;
+            int xEnd = x0 + (y - y0) * inverseSlope2;
+
+            if (xEnd < xStart) {
+                intSwap(&xStart, &xEnd); // swap if x_start is to the right of x_end
+            }
+
+            for (int x = xStart; x < xEnd; x++) {
+                // Draw our pixel with a solid color
+                drawTrianglePixel(x, y, display, triangleColor);
+            }
+        }
+    }
+}
+
 
 void Triangle::sortVerticiesByHeight() {
     Vec4 temp;

@@ -29,6 +29,8 @@ class Triangle {
 
         void renderFlatBottom(Display* display, color_t triangleColor);
 
+        void renderFlatTop(Display* display, color_t triangleColor);
+
         void drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor);
 
         Vec3 barycentricWeights(Vec2 a, Vec2 b, Vec2 c, Vec2 p);
