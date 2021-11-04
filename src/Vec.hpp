@@ -14,7 +14,7 @@ class Vec2 {
 
         double length();
         void add(const Vec2& v);
-        void sub(const Vec2& v);
+        Vec2 sub(const Vec2& v);
         void mul(double factor);
         void div(double factor);
         double dot(const Vec2& v);

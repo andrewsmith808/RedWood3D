@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 
+const int DEFAULT_PIXEL_COLOR = 0xFFFFFFFF;
+
 typedef struct {
     unsigned int color;
 } color_t;
@@ -17,6 +19,8 @@ class Display {
 
         unsigned int* colorBuffer;
         SDL_Texture* colorBufferTexture;
+
+        double* zBuffer;
     public:
         // produce a fullscreen window
         Display();
@@ -25,6 +29,14 @@ class Display {
         Display(int windowWidth, int windowHeight);
 
         ~Display();
+
+        double getWindowWidth() const;
+        
+        double getWindowHeight() const;
+
+        double getZBufferAt(int index) const;
+
+        void setZbufferAt(int index, double value);
 
         bool initializeWindow();
 
@@ -36,6 +48,8 @@ class Display {
 
         void clearColorBuffer(color_t color);
 
+        void clearZBuffer();
+
         void drawPixel(int x, int y, color_t pixelColor);
 
         void drawGrid();
@@ -43,6 +57,8 @@ class Display {
         void drawRect(int x, int y, int width, int height, color_t rectColor);
 
         void drawLine(int x0, int x1, int y0, int y1, color_t lineColor);
+
+
 };
 
 
