@@ -2,13 +2,22 @@
 #define __RED_WOOD_ENGINE_HPP__
 
 #include "Display.hpp"
+#include "Vec.hpp"
 
 const int FPS = 30;
 const int TARGET_FRAME_TIME = 1000 / FPS;
 
+typedef struct {
+    Vec3 position;
+    Vec3 direction;
+    Vec3 forward_velocity;
+    double yaw;
+} camera_t;
+
 class RedWoodEngine {
     private:
         Display* display;
+        camera_t camera;
         bool isRunning;
 
     public:
@@ -26,6 +35,8 @@ class RedWoodEngine {
         void processInput();
 
         void update();
+
+        void setDefaultCamera();
 };
 
 #endif // __RED_WOOD_ENGINE_HPP__
