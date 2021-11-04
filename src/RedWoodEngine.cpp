@@ -10,16 +10,31 @@ RedWoodEngine::RedWoodEngine() {
     SDL_GetCurrentDisplayMode(0, &display_mode);
     display = new Display(display_mode.w, display_mode.h);
     isRunning = false;
+
+    setDefaultCamera();
 }
 
 RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) {
     display = new Display(windowWidth, windowHeight);
     isRunning = false;
+
+    setDefaultCamera();
 }
 
 RedWoodEngine::~RedWoodEngine() {
     delete display;
     SDL_Quit();
+}
+
+void RedWoodEngine::setDefaultCamera() {
+    Vec3 pos(0, 0, 0);
+    Vec3 dir(0, 0, 1);
+    Vec3 v(0, 0, 0);
+
+    camera.position = pos;
+    camera.direction = dir;
+    camera.forward_velocity = v;
+    camera.yaw = 0.0;
 }
 
 void RedWoodEngine::run() {
@@ -55,4 +70,6 @@ void RedWoodEngine::update() {
     display->drawLine(0, 1920, 0, 1080, lineColor);
     display->drawRect(960, 540, 100, 200, rectColor);
 }
+
+
 
