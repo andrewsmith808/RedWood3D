@@ -6,9 +6,6 @@
 #include <vector>
 #include <string>
 
-static const int NUM_CUBE_VERTICIES = 8;
-static const int NUM_CUBE_FACES = 12;
-
 typedef struct {
     int a, b, c;
     color_t color;
@@ -16,22 +13,17 @@ typedef struct {
 
 class Mesh {
     private:
-        Vec3* verticies;
-        face_t* faces;
+        std::vector<Vec3> verticies;
+        std::vector<face_t> faces;
 
         Vec3 rotation;
         Vec3 scale;
         Vec3 translation;
-
-        Vec3 cubeVerticies[NUM_CUBE_VERTICIES];
-        face_t cubeFaces[NUM_CUBE_FACES];
     public:
         Mesh();
         Mesh(std::string filename);
 
         ~Mesh();
-
-
 
         double getRotationX() const;
         double getRotationY() const;
@@ -61,11 +53,9 @@ class Mesh {
         void setScaleY(double sy);
         void setScaleZ(double sz);
 
-
     private:
         void loadDefaultCubeData();
         void loadObjFileData();
 };
-
 
 #endif // __MESH_HPP__
