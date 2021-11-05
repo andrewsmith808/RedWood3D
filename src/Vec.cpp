@@ -77,15 +77,29 @@ double Vec3::getZ() const {
     return z;
 }
 
+void Vec3::setX(double value) {
+    x = value;
+}
+void Vec3::setY(double value) {
+    y = value;
+}
+void Vec3::setZ(double value) {
+    z = value;
+}
+
 double Vec3::length() {
     return sqrt(x * x + y * y + z * z);
 }
 
-void Vec3::add(const Vec3& v) {
-    x = x + v.x;
-    y = y + v.y;
-    z = z + v.z;
+Vec3 Vec3::add(const Vec3& v) {
+    double X = x + v.x;
+    double Y = y + v.y;
+    double Z = z + v.z;
+
+    Vec3 result(X, Y, Z);
+    return result;
 }
+
 Vec3 Vec3::sub(const Vec3& v) {
     double X = x - v.x;
     double Y = y - v.y;

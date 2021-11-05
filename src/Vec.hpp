@@ -33,8 +33,12 @@ class Vec3 {
         double getY() const;
         double getZ() const;
 
+        void setX(double value);
+        void setY(double value);
+        void setZ(double value);
+
         double length();
-        void add(const Vec3& v);
+        Vec3 add(const Vec3& v);
         Vec3 sub(const Vec3& v);
         void div(double factor);
         void normalize();
