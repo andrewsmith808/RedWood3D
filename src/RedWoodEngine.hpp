@@ -3,6 +3,10 @@
 
 #include "Display.hpp"
 #include "Vec.hpp"
+#include "Triangle.hpp"
+#include "Matrix4.hpp"
+#include "Mesh.hpp"
+#include <vector>
 
 const int FPS = 30;
 const int TARGET_FRAME_TIME = 1000 / FPS;
@@ -20,6 +24,19 @@ class RedWoodEngine {
         camera_t camera;
         bool isRunning;
 
+        double fov;
+        double aspectRatio;
+        double zNear;
+        double zFar;
+        
+        Mesh mesh;
+
+        std::vector<Triangle> trianglesToRender;
+        Matrix4 generator;
+        Matrix4 worldMatrix;
+        Matrix4 projectionMatrix;
+        Matrix4 viewMatrix;
+
     public:
         // produce a fullscreen window
         RedWoodEngine();
@@ -32,6 +49,8 @@ class RedWoodEngine {
         void run();
     
     private:
+        void setup();
+
         void processInput();
 
         void update();

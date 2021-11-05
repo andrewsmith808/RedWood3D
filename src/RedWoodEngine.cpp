@@ -1,8 +1,5 @@
 #include "RedWoodEngine.hpp"
-
-// temporary test variables : MAKE SURE TO DELETE 
-color_t lineColor = {0xFFFFFFFF};
-color_t rectColor = {0xFFFF8972};
+#include <cmath>
 
 RedWoodEngine::RedWoodEngine() {
     // Set width and height of the SDL window with the max screen resolution
@@ -12,6 +9,11 @@ RedWoodEngine::RedWoodEngine() {
     isRunning = false;
 
     setDefaultCamera();
+
+    fov = M_PI / 3.0;
+    aspectRatio = (double)display->getWindowHeight() / (double)display->getWindowWidth();
+    zNear = 1.0;
+    zFar = 20.0;
 }
 
 RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) {
@@ -19,6 +21,11 @@ RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) {
     isRunning = false;
 
     setDefaultCamera();
+
+    fov = M_PI / 3.0;
+    aspectRatio = (double)display->getWindowHeight() / (double)display->getWindowWidth();
+    zNear = 1.0;
+    zFar = 20.0;
 }
 
 RedWoodEngine::~RedWoodEngine() {
@@ -37,10 +44,16 @@ void RedWoodEngine::setDefaultCamera() {
     camera.yaw = 0.0;
 }
 
+void RedWoodEngine::setup() {
+    display->setup();
+
+    projectionMatrix = generator.perspective(fov, aspectRatio, zNear, zFar);
+}
+
 void RedWoodEngine::run() {
     isRunning = display->initializeWindow();
 
-    display->setup();
+    setup();
 
     while(isRunning) {
         processInput();
@@ -66,10 +79,5 @@ void RedWoodEngine::processInput() {
 }
 
 void RedWoodEngine::update() {
-    display->drawGrid();
-    display->drawLine(0, 1920, 0, 1080, lineColor);
-    display->drawRect(960, 540, 100, 200, rectColor);
+
 }
-
-
-
