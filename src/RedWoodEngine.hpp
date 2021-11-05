@@ -23,16 +23,18 @@ class RedWoodEngine {
         Display* display;
         camera_t camera;
         bool isRunning;
+        int previousFrameTime;
+        double deltaTime;
 
         double fov;
         double aspectRatio;
         double zNear;
         double zFar;
-        
+
         Mesh mesh;
 
         std::vector<Triangle> trianglesToRender;
-        Matrix4 generator;
+        Matrix4 matrixGenerator;
         Matrix4 worldMatrix;
         Matrix4 projectionMatrix;
         Matrix4 viewMatrix;
