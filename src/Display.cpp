@@ -26,11 +26,11 @@ Display::~Display() {
     delete colorBuffer;
 }
 
-double Display::getWindowWidth() const {
+int Display::getWindowWidth() const {
     return windowWidth;
 }
         
-double Display::getWindowHeight() const {
+int Display::getWindowHeight() const {
     return windowHeight;
 }
 

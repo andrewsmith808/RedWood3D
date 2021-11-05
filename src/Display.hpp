@@ -30,9 +30,9 @@ class Display {
 
         ~Display();
 
-        double getWindowWidth() const;
+        int getWindowWidth() const;
         
-        double getWindowHeight() const;
+        int getWindowHeight() const;
 
         double getZBufferAt(int index) const;
 
