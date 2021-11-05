@@ -13,12 +13,13 @@ typedef struct {
 
 class Mesh {
     private:
-        std::vector<Vec3> verticies;
-        std::vector<face_t> faces;
-
         Vec3 rotation;
         Vec3 scale;
         Vec3 translation;
+    public:
+        std::vector<Vec3> verticies;
+        std::vector<face_t> faces;
+        
     public:
         Mesh();
         Mesh(std::string filename);
