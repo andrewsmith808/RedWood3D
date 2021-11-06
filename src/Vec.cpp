@@ -1,47 +1,49 @@
 #include "Vec.hpp"
 #include <cmath>
 
+//=====================================================
 // Implementations of Vec2 functions
-
+//=====================================================
 Vec2::Vec2() :
     x(0), y(0) {}
 
 Vec2::Vec2(double x, double y) :
     x(x), y(y) {}
 
-Vec2::~Vec2() {
-    // no new memory allocated
-}
-
-double Vec2::getX() const {
-    return x;
-}
-
-double Vec2::getY() const {
-    return y;
-}
+Vec2::~Vec2() {}
 
 double Vec2::length() {
     return sqrt((x * x) + (y * y));
 }
 
-void Vec2::add(const Vec2& v) {
-    x = x + v.x;
-    y = y + v.y;
-}
-Vec2 Vec2::sub(const Vec2& v) {
-    double X = x - v.x;
-    double Y = y - v.y;
-    Vec2 result(X, Y);
+Vec2 Vec2::add(const Vec2& v) {
+    double a = x + v.x;
+    double b = y + v.y;
+
+    Vec2 result(a, b);
     return result;
 }
-void Vec2::mul(double factor) {
-    x = x * factor;
-    y = y * factor;
+Vec2 Vec2::sub(const Vec2& v) {
+    double a = x - v.x;
+    double b = y - v.y;
+
+    Vec2 result(a, b);
+    return result;
 }
-void Vec2::div(double factor) {
-    x = x / factor;
-    y = y / factor;
+Vec2 Vec2::mul(double factor) {
+    double a = x * factor;
+    double b = y * factor;
+
+    Vec2 result(a, b);
+    return result;
+}
+
+Vec2 Vec2::div(double factor) {
+    double a = x / factor;
+    double b = y / factor;
+
+    Vec2 result(a, b);
+    return result;
 }
 
 double Vec2::dot(const Vec2& v) {
@@ -54,7 +56,9 @@ void Vec2::normalize() {
     y = y / length;
 }
 
-// Implementation of Vec3 functions
+//=====================================================
+// Implementations of Vec3 functions
+//=====================================================
 Vec3::Vec3() :
     x(0), y(0), z(0) {}
 

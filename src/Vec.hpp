@@ -2,21 +2,18 @@
 #define __VEC_HPP__
 
 class Vec2 {
-    private:
-        double x, y;
     public:
+        double x, y;
+
         Vec2();
         Vec2(double x, double y);
         ~Vec2();
 
-        double getX() const;
-        double getY() const;
-
         double length();
-        void add(const Vec2& v);
+        Vec2 add(const Vec2& v);
         Vec2 sub(const Vec2& v);
-        void mul(double factor);
-        void div(double factor);
+        Vec2 mul(double factor);
+        Vec2 div(double factor);
         double dot(const Vec2& v);
         void normalize();
 };
