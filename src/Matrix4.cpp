@@ -81,8 +81,8 @@ Matrix4 Matrix4::rotateY(double angle) {
 
     Matrix4 m;
     m.setElement(0, 0, c);
-    m.setElement(0, 2, -s);
-    m.setElement(2, 0, s);
+    m.setElement(0, 2, s);
+    m.setElement(2, 0, -s);
     m.setElement(2, 2, c);
     return m;
 }
@@ -112,12 +112,12 @@ Matrix4 Matrix4::perspective(double fov, double aspect, double znear, double zfa
 
 
 Vec4 Matrix4::mulVec4(const Vec4& v) {
-    double x = getElement(0, 0) * v.getX() + getElement(0, 1) * v.getY() + getElement(0, 2) * v.getZ() + getElement(0, 3) * v.getW();
-    double y = getElement(1, 0) * v.getX() + getElement(1, 1) * v.getY() + getElement(1, 2) * v.getZ() + getElement(1, 3) * v.getW();
-    double z = getElement(2, 0) * v.getX() + getElement(2, 1) * v.getY() + getElement(2, 2) * v.getZ() + getElement(2, 3) * v.getW();
-    double w = getElement(3, 0) * v.getX() + getElement(3, 1) * v.getY() + getElement(3, 2) * v.getZ() + getElement(3, 3) * v.getW();
+    double X = getElement(0, 0) * v.getX() + getElement(0, 1) * v.getY() + getElement(0, 2) * v.getZ() + getElement(0, 3) * v.getW();
+    double Y = getElement(1, 0) * v.getX() + getElement(1, 1) * v.getY() + getElement(1, 2) * v.getZ() + getElement(1, 3) * v.getW();
+    double Z = getElement(2, 0) * v.getX() + getElement(2, 1) * v.getY() + getElement(2, 2) * v.getZ() + getElement(2, 3) * v.getW();
+    double W = getElement(3, 0) * v.getX() + getElement(3, 1) * v.getY() + getElement(3, 2) * v.getZ() + getElement(3, 3) * v.getW();
 
-    Vec4 result(x, y, z, w);
+    Vec4 result(X, Y, Z, W);
     return result;
 }
 

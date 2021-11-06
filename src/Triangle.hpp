@@ -5,7 +5,7 @@
 #include "Vec.hpp"
 
 class Triangle {
-    private:
+    public:
         Vec4 points[3];
         color_t color;
 
@@ -13,7 +13,7 @@ class Triangle {
         Triangle();
         ~Triangle();
 
-        void drawFilledTriangle(Display* display, color_t triangleColor);
+        void drawFilledTriangle(Display* display);
 
     private:
         void intSwap(int* a, int* b);
@@ -22,9 +22,9 @@ class Triangle {
 
         void sortVerticiesByHeight();
 
-        void renderFlatBottom(Display* display, color_t triangleColor);
+        void renderFlatBottom(Display* display);
 
-        void renderFlatTop(Display* display, color_t triangleColor);
+        void renderFlatTop(Display* display);
 
         void drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor);
 

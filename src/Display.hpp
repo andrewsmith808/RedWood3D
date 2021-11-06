@@ -34,6 +34,8 @@ class Display {
         
         int getWindowHeight() const;
 
+        SDL_Renderer* getRender() const;
+
         double getZBufferAt(int index) const;
 
         void setZbufferAt(int index, double value);

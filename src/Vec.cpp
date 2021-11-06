@@ -10,7 +10,7 @@ Vec2::Vec2(double x, double y) :
     x(x), y(y) {}
 
 Vec2::~Vec2() {
-    delete this;
+    // no new memory allocated
 }
 
 double Vec2::getX() const {
@@ -22,7 +22,7 @@ double Vec2::getY() const {
 }
 
 double Vec2::length() {
-    return sqrt(x * x + y * y);
+    return sqrt((x * x) + (y * y));
 }
 
 void Vec2::add(const Vec2& v) {
@@ -45,7 +45,7 @@ void Vec2::div(double factor) {
 }
 
 double Vec2::dot(const Vec2& v) {
-    return x * v.x + y * v.y;
+    return (x * v.x) + (y * v.y);
 }
 
 void Vec2::normalize() {
@@ -88,7 +88,7 @@ void Vec3::setZ(double value) {
 }
 
 double Vec3::length() {
-    return sqrt(x * x + y * y + z * z);
+    return sqrt(x*x + y*y + z*z);
 }
 
 Vec3 Vec3::add(const Vec3& v) {
@@ -128,7 +128,7 @@ void Vec3::normalize() {
 }
 
 double Vec3::dot(const Vec3& v) {
-    return x * v.x + y * v.y + z * v.z;
+    return (x * v.x) + (y * v.y) + (z * v.z);
 }
 
 Vec3 Vec3::cross(const Vec3& v) {

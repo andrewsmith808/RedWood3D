@@ -11,6 +11,11 @@
 const int FPS = 30;
 const int TARGET_FRAME_TIME = 1000 / FPS;
 
+enum CullMethod {
+    CULL_NONE,
+    CULL_BACKFACE
+};
+
 typedef struct {
     Vec3 position;
     Vec3 direction;
@@ -25,6 +30,8 @@ class RedWoodEngine {
         bool isRunning;
         int previousFrameTime;
         double deltaTime;
+
+        CullMethod cullMethod;
 
         double fov;
         double aspectRatio;
@@ -56,6 +63,8 @@ class RedWoodEngine {
         void processInput();
 
         void update();
+
+        void render();
 
         void setDefaultCamera();
 };

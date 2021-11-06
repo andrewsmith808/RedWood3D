@@ -52,6 +52,7 @@ void RedWoodEngine::setDefaultCamera() {
 void RedWoodEngine::setup() {
     display->setup();
 
+    cullMethod = CULL_NONE;
     projectionMatrix = matrixGenerator.perspective(fov, aspectRatio, zNear, zFar);
 }
 
@@ -60,10 +61,13 @@ void RedWoodEngine::run() {
 
     setup();
 
+    //int countDown = 2;
+
     while(isRunning) {
         processInput();
         update();
-        display->render();
+        render();
+        //countDown--;
     }
 }
 
@@ -93,8 +97,14 @@ void RedWoodEngine::update() {
     deltaTime = (SDL_GetTicks() - previousFrameTime) / 1000.0;
     previousFrameTime = SDL_GetTicks();
 
-    mesh.setRoationAll(0.01 * deltaTime, 0.01 * deltaTime, 0.01 * deltaTime);
-    mesh.setTranslationZ(5.0);
+    trianglesToRender.clear();
+
+    mesh.rotation.setX(mesh.rotation.getX() + (0.0 * deltaTime));
+    mesh.rotation.setY(mesh.rotation.getY() + (0.0 * deltaTime));
+    mesh.rotation.setZ(mesh.rotation.getZ() + (0.0 * deltaTime));
+    mesh.translation.setZ(25.0);
+
+    //std::cout << "mesh rotation: " << mesh.rotation.getX() << " " << mesh.rotation.getY() << " " << mesh.rotation.getZ() << std::endl;
 
     Vec3 target(0, 0, 1);
     Matrix4 cameraYawRotation = matrixGenerator.rotateY(camera.yaw);
@@ -107,17 +117,127 @@ void RedWoodEngine::update() {
 
     viewMatrix = matrixGenerator.lookAt(camera.position, target, upDirection);
 
-    Matrix4 scaleMatrix = matrixGenerator.scale(mesh.getScaleX(),
-                                                mesh.getScaleY(),
-                                                mesh.getScaleZ());
+    Matrix4 scaleMatrix = matrixGenerator.scale(mesh.scale.getX(),
+                                                mesh.scale.getY(),
+                                                mesh.scale.getY());
 
-    Matrix4 translationMatrix = matrixGenerator.translate(mesh.getTranslationX(),
-                                                          mesh.getTranslationY(),
-                                                          mesh.getTranslationZ());
+    Matrix4 translationMatrix = matrixGenerator.translate(mesh.translation.getX(),
+                                                          mesh.translation.getY(),
+                                                          mesh.translation.getZ());
 
-    Matrix4 rotationMatrixX = matrixGenerator.rotateX(mesh.getRotationX());
-    Matrix4 rotationMatrixY = matrixGenerator.rotateY(mesh.getRotationY());
-    Matrix4 rotationMatrixZ = matrixGenerator.rotateY(mesh.getRotationZ());
+    Matrix4 rotationMatrixX = matrixGenerator.rotateX(mesh.rotation.getX());
+    Matrix4 rotationMatrixY = matrixGenerator.rotateY(mesh.rotation.getY());
+    Matrix4 rotationMatrixZ = matrixGenerator.rotateZ(mesh.rotation.getZ());
 
     // Time to Loop through our mesh triangles!
+    int numFaces = mesh.faces.size();
+    for (int i = 0; i < numFaces; i++) {
+        face_t meshFace = mesh.faces.at(i);
+        //std::cout << "Mesh: " << meshFace.a << " " << meshFace.b << " " << meshFace.c << std::endl;
+
+        Vec3 faceVerticies[3];
+        faceVerticies[0] = mesh.verticies.at(meshFace.a - 1);
+        faceVerticies[1] = mesh.verticies.at(meshFace.b - 1);
+        faceVerticies[2] = mesh.verticies.at(meshFace.c - 1);
+
+        Vec4 transformedVerticies[3];
+
+        // loop through each verticie of the current face
+        for (int j = 0; j < 3; j++) {
+            Vec4 transformedVertex = Vec3_To_Vec4(faceVerticies[j]);
+            
+            worldMatrix = scaleMatrix.mulMatrix(worldMatrix);
+            worldMatrix = rotationMatrixZ.mulMatrix(worldMatrix);
+            worldMatrix = rotationMatrixY.mulMatrix(worldMatrix);
+            worldMatrix = rotationMatrixX.mulMatrix(worldMatrix);
+            worldMatrix = translationMatrix.mulMatrix(worldMatrix);
+
+            //std::cout << worldMatrix << std::endl;
+
+            transformedVertex = worldMatrix.mulVec4(transformedVertex);
+            transformedVertex = viewMatrix.mulVec4(transformedVertex);
+
+            transformedVerticies[j] = transformedVertex;
+            //std::cout << "transformed vertex " << j << ": " << transformedVertex.getX() << " " << transformedVertex.getY() << " " << transformedVertex.getZ() << " " << transformedVertex.getW() << std::endl;
+        }
+
+        Vec3 a = Vec4_To_Vec3(transformedVerticies[0]);
+        Vec3 b = Vec4_To_Vec3(transformedVerticies[1]);
+        Vec3 c = Vec4_To_Vec3(transformedVerticies[2]);
+
+        Vec3 ab = b.sub(a);
+        Vec3 ac = c.sub(a);
+        ab.normalize();
+        ac.normalize();
+
+        Vec3 normal = ab.cross(ac);
+        normal.normalize();
+
+        Vec3 origin(0, 0, 0);
+        Vec3 cameraRay = origin.sub(a);
+
+        double normalDotCameraRay = normal.dot(cameraRay);
+
+        if (cullMethod == CULL_BACKFACE) {
+            if (normalDotCameraRay < 0) {
+                continue;
+            } 
+        }
+
+        Vec4 projectedPoints[3];
+
+        for (int j = 0; j < 3; j++) {
+            projectedPoints[j] = projectionMatrix.mulVec4(transformedVerticies[j]);
+
+            if (projectedPoints[j].getW() != 0) {
+                projectedPoints[j].setX(projectedPoints[j].getX() / projectedPoints[j].getW());
+                projectedPoints[j].setY(projectedPoints[j].getY() / projectedPoints[j].getW());
+                projectedPoints[j].setZ(projectedPoints[j].getZ() / projectedPoints[j].getW());
+            }
+
+            projectedPoints[j].setY(projectedPoints[j].getY() * -1);
+
+            projectedPoints[j].setX(projectedPoints[j].getX() * (display->getWindowWidth() / 2.0));
+            projectedPoints[j].setY(projectedPoints[j].getY() * (display->getWindowHeight() / 2.0));
+
+            projectedPoints[j].setX(projectedPoints[j].getX() + (display->getWindowWidth() / 2.0));
+            projectedPoints[j].setY(projectedPoints[j].getY() + (display->getWindowHeight() / 2.0));
+
+            std::cout << "projected points: " << projectedPoints[j].getX() << " " << projectedPoints[j].getY() << " " << projectedPoints[j].getZ() << " " << projectedPoints[j].getW() << std::endl;
+        }
+
+        Triangle projectedTriangle;
+        color_t triangleColor = {0xFF000000};
+
+        projectedTriangle.points[0] = projectedPoints[0];
+        projectedTriangle.points[1] = projectedPoints[1];
+        projectedTriangle.points[2] = projectedPoints[2];
+        projectedTriangle.color = triangleColor;
+
+        trianglesToRender.push_back(projectedTriangle);
+    }
+}
+
+void RedWoodEngine::render() {
+    color_t clearColor = {0xFFFFFFFF};
+
+    SDL_RenderClear(display->getRender());
+
+    display->drawGrid();
+
+    // std::cout << "Triangles to Render: " << trianglesToRender.size() << std::endl;
+    
+    for (int i = 0; i < trianglesToRender.size(); i++) {
+        Triangle triangle = trianglesToRender.at(i);
+
+        triangle.drawFilledTriangle(display);
+    }
+
+    display->renderColorBuffer();
+
+    display->clearColorBuffer(clearColor);
+
+    display->clearZBuffer();
+
+    SDL_RenderPresent(display->getRender());
 }

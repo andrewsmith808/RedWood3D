@@ -34,6 +34,10 @@ int Display::getWindowHeight() const {
     return windowHeight;
 }
 
+SDL_Renderer* Display::getRender() const {
+    return renderer;
+}
+
 double Display::getZBufferAt(int index) const {
     return zBuffer[index];
 }
@@ -135,7 +139,7 @@ void Display::drawPixel(int x, int y, color_t pixelColor) {
 }
 
 void Display::drawGrid() {
-    color_t gridColor = {0x69696969};
+    color_t gridColor = {0xFF000000};
     for (int y = 0; y < windowHeight; y += 20) {
         for (int x = 0; x < windowWidth; x += 20) {
             drawPixel(x, y, gridColor);
