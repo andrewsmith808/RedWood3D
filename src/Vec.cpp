@@ -65,70 +65,56 @@ Vec3::Vec3() :
 Vec3::Vec3(double x, double y, double z) :
     x(x), y(y), z(z) {}
 
-Vec3::~Vec3() {
-    // no dynamic memory allocated, default behavior
-}
-
-double Vec3::getX() const {
-    return x;
-}
-
-double Vec3::getY() const {
-    return y;
-}
-
-double Vec3::getZ() const {
-    return z;
-}
-
-void Vec3::setX(double value) {
-    x = value;
-}
-void Vec3::setY(double value) {
-    y = value;
-}
-void Vec3::setZ(double value) {
-    z = value;
-}
+Vec3::~Vec3() {}
 
 double Vec3::length() {
     return sqrt(x*x + y*y + z*z);
 }
 
 Vec3 Vec3::add(const Vec3& v) {
-    double X = x + v.x;
-    double Y = y + v.y;
-    double Z = z + v.z;
+    double a = x + v.x;
+    double b = y + v.y;
+    double c = z + v.z;
 
-    Vec3 result(X, Y, Z);
+    Vec3 result(a, b, c);
     return result;
 }
 
 Vec3 Vec3::sub(const Vec3& v) {
-    double X = x - v.x;
-    double Y = y - v.y;
-    double Z = z - v.z;
+    double a = x - v.x;
+    double b = y - v.y;
+    double c = z - v.z;
 
-    Vec3 result(X, Y, Z);
+    Vec3 result(a, b, c);
     return result;
 }
 
-void Vec3::mul(double factor) {
-    x *= factor;
-    y *= factor;
-    z *= factor;
+Vec3 Vec3::mul(double factor) {
+    double a = x * factor;
+    double b = y * factor;
+    double c = c * factor;
+
+    Vec3 result(a, b, c);
+    return result;
 }
 
-void Vec3::div(double factor) {
-    x /= factor;
-    y /= factor;
-    z /= factor;
+Vec3 Vec3::div(double factor) {
+    double a = x / factor;
+    double b = y / factor;
+    double c = z / factor;
+
+    Vec3 result(a, b, c);
+    return result;
 }
-void Vec3::normalize() {
+
+Vec3 Vec3::normalize() {
     double length = this->length();
-    x /= length;
-    y /= length;
-    z /= length;
+    double a = x / length;
+    double b = y / length;
+    double c = z / length;
+
+    Vec3 result(a, b, c);
+    return result;
 }
 
 double Vec3::dot(const Vec3& v) {
@@ -136,89 +122,60 @@ double Vec3::dot(const Vec3& v) {
 }
 
 Vec3 Vec3::cross(const Vec3& v) {
-    Vec3 result (
-        this->y * v.z - this->z * v.y,
-        this->z * v.x - this->x * v.z,
-        this->x * v.y - this->y * v.x
-    );
+    double a = y * v.z - z * v.y;
+    double b = z * v.x - x * v.z;
+    double c = x * v.y - y * v.x;
+
+    Vec3 result(a, b, c);
     return result;
 }
 Vec3 Vec3::rotateX(double angle) {
-    Vec3 rotatedVector (
-        this->x,
-        this->y * cos(angle) - this->z * sin(angle),
-        this->y * sin(angle) + this->z * cos(angle)
-    );
-    return rotatedVector;
+    double a = x;
+    double b = y * cos(angle) - z * sin(angle);
+    double c = y * sin(angle) + z * cos(angle);
+    
+    Vec3 result(a, b, b);
+    return result;
 }
 Vec3 Vec3::rotateY(double angle) {
-    Vec3 rotatedVector(
-        this->x * cos(angle) + this->z * sin(angle),
-        this->y,
-        -this->x * sin(angle) + this->z * cos(angle)
-    );
-    return rotatedVector;
+    double a = x * cos(angle) + z * sin(angle);
+    double b = y;
+    double c = -x * sin(angle) + z * cos(angle);
+
+    Vec3 result(a, b, c);
+    return result;
 }
 Vec3 Vec3::rotateZ(double angle) {
-    Vec3 rotatedVector(
-        this->x * cos(angle) - this->y * sin(angle),
-        this->x * sin(angle) + this->y * cos(angle),
-        this->z
-    );
-    return rotatedVector;
+    double a = x * cos(angle) - y * sin(angle);
+    double b = x * sin(angle) + y * cos(angle);
+    double c = z;
+
+    Vec3 result(a, b, c);
+    return result;
 }
 
-// Implemntation of Vec4 functions
+//=====================================================
+// Implementations of Vec3 functions
+//=====================================================
 Vec4::Vec4() :
     x(0), y(0), z(0), w(1) {}
 
 Vec4::Vec4(double x, double y, double z, double w) :
     x(x), y(y), z(z), w(w) {}
 
-Vec4::~Vec4() {
-    // no dynamically allocated memory default behavior
-}
+Vec4::~Vec4() {}
 
 Vec3 Vec4_To_Vec3(const Vec4& v) {
-    Vec3 result(v.getX(), v.getY(), v.getZ());
+    Vec3 result(v.x, v.y, v.z);
     return result;
 }
 
 Vec2 Vec4_To_Vec2(const Vec4& v) {
-    Vec2 result(v.getX(), v.getY());
+    Vec2 result(v.x, v.y);
     return result;
 }
 
 Vec4 Vec3_To_Vec4(const Vec3& v) {
-    Vec4 result(v.getX(), v.getY(), v.getZ(), 1.0);
+    Vec4 result(v.x, v.y, v.z, 1.0);
     return result;
-}
-
-double Vec4::getX() const {
-    return x;
-}
-
-double Vec4::getY() const {
-    return y;
-}
-
-double Vec4::getZ() const {
-    return z;
-}
-
-double Vec4::getW() const {
-    return w;
-}
-
-void Vec4::setX(double value) {
-    x = value;
-}
-void Vec4::setY(double value) {
-    y = value;
-}
-void Vec4::setZ(double value) {
-    z = value;
-}
-void Vec4::setW(double value) {
-    w = value;
 }
