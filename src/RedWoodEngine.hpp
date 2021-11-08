@@ -16,23 +16,16 @@ enum CullMethod {
     CULL_BACKFACE
 };
 
-typedef struct {
-    Vec3 position;
-    Vec3 direction;
-    Vec3 forward_velocity;
-    double yaw;
-} camera_t;
-
 class RedWoodEngine {
     private:
         Display* display;
-        camera_t camera;
         bool isRunning;
         int previousFrameTime;
         double deltaTime;
 
         CullMethod cullMethod;
 
+        Vec3 cameraPosition;
         double fov;
         double aspectRatio;
         double zNear;
