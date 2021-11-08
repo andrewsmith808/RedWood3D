@@ -8,6 +8,7 @@ class Triangle {
     public:
         Vec4 points[3];
         color_t color;
+        double avgDepth;
 
         Triangle();
         ~Triangle();

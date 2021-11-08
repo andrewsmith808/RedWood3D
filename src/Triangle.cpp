@@ -12,6 +12,8 @@ Triangle::Triangle() {
     points[2] = vec3;
 
     color.color = 0xFF994588;
+
+    avgDepth = 0;
 }
 
 Triangle::~Triangle() {}
