@@ -24,8 +24,6 @@ RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) {
     previousFrameTime = 0;
     deltaTime = 0;
 
-    setDefaultCamera();
-
     cameraPosition.x = 0; cameraPosition.y = 0; cameraPosition.z = 0;
     fov = M_PI / 3.0;
     aspectRatio = (double)display->windowHeight / (double)display->windowWidth;
@@ -41,19 +39,21 @@ RedWoodEngine::~RedWoodEngine() {
 void RedWoodEngine::setup() {
     display->setup();
 
-    cullMethod = CULL_NONE;
+    cullMethod = CULL_BACKFACE;
     projectionMatrix = matrixGenerator.perspective(fov, aspectRatio, zNear, zFar);
+    //std::cout << "projection matrix: " << std::endl << projectionMatrix << std::endl;
 }
 
 void RedWoodEngine::run() {
     isRunning = display->initializeWindow();
 
     setup();
-
+    int numOfRuns = 50;
     while(isRunning) {
         processInput();
         update();
         render();
+        numOfRuns--;
     }
 }
 
@@ -82,16 +82,32 @@ void RedWoodEngine::update() {
 
     previousFrameTime = SDL_GetTicks();
 
-    mesh.rotation.x += 0.001;
-    mesh.rotation.y += 0.001;
-    mesh.rotation.z += 0.003;
+    //std::cout << "Triangles to render size: " << trianglesToRender.size() << std::endl;
+
+    mesh.rotation.x += 0.02;
+    mesh.rotation.y += 0.07;
+    mesh.rotation.z += 0.004;
     mesh.translation.z = 5.0;
 
     Matrix4 scaleMatrix = matrixGenerator.scale(mesh.scale.x, mesh.scale.y, mesh.scale.z);
+    //std::cout << "Scale Matrix Calculation: " << std::endl;
+    //std::cout << scaleMatrix << std::endl;
+
     Matrix4 translationMatrix = matrixGenerator.translate(mesh.translation.x, mesh.translation.y, mesh.translation.z);
+    //std::cout << "Translation Matrix Calculation: " << std::endl;
+    //std::cout << translationMatrix << std::endl;
+
     Matrix4 rotationMatrixX = matrixGenerator.rotateX(mesh.rotation.x);
+    //std::cout << "RoationX Matrix Calculation: " << std::endl;
+    //std::cout << rotationMatrixX << std::endl;
+
     Matrix4 rotationMatrixY = matrixGenerator.rotateY(mesh.rotation.y);
+    //std::cout << "RoationY Matrix Calculation: " << std::endl;
+    //std::cout << rotationMatrixY << std::endl;
+
     Matrix4 rotationMatrixZ = matrixGenerator.rotateZ(mesh.rotation.z);
+    //std::cout << "RotationZ Matrix Calculation: " << std::endl;
+    //std::cout << rotationMatrixZ << std::endl;
 
     // Time to Loop through our mesh triangles!
     int numFaces = mesh.faces.size();
@@ -108,12 +124,17 @@ void RedWoodEngine::update() {
         // loop through each verticie of the current face
         for (int j = 0; j < 3; j++) {
             Vec4 transformedVertex = Vec3_To_Vec4(faceVerticies[j]);
+
+            worldMatrix.identity();
             
             worldMatrix = scaleMatrix.mulMatrix(worldMatrix);
             worldMatrix = rotationMatrixZ.mulMatrix(worldMatrix);
             worldMatrix = rotationMatrixY.mulMatrix(worldMatrix);
             worldMatrix = rotationMatrixX.mulMatrix(worldMatrix);
             worldMatrix = translationMatrix.mulMatrix(worldMatrix);
+
+            //std::cout << "World Matrix calculation: " << i << "," << j << std::endl;
+            //std::cout << worldMatrix << std::endl;
 
             transformedVertex = worldMatrix.mulVec4(transformedVertex);
 
@@ -145,22 +166,29 @@ void RedWoodEngine::update() {
         Vec4 projectedPoints[3];
 
         for (int j = 0; j < 3; j++) {
-            projectedPoints[j] = projectionMatrix.mulVec4(transformedVerticies[j]);
+            projectedPoints[j] = projectionMatrix.mulProjection(transformedVerticies[j]);
 
             projectedPoints[j].x *= (display->windowWidth / 2.0);
             projectedPoints[j].y *= (display->windowHeight / 2.0);
 
             projectedPoints[j].x += (display->windowWidth / 2.0);
             projectedPoints[j].y += (display->windowHeight / 2.0);
+
+            //std::cout << "Projected Points: " << i << "," << j << std::endl;
+            //std::cout << projectedPoints[j] << std::endl;
         }
 
         Triangle projectedTriangle;
 
-        double averageDepth = (transformedVerticies[0].z + transformedVerticies[1].z + transformedVerticies[2].z / 3.0);
+        double averageDepth = (transformedVerticies[0].z + transformedVerticies[1].z + transformedVerticies[2].z) / 3.0;
 
-        projectedTriangle.points[0] = projectedPoints[0];
-        projectedTriangle.points[1] = projectedPoints[1];
-        projectedTriangle.points[2] = projectedPoints[2];
+        projectedTriangle.points[0].x = projectedPoints[0].x;
+        projectedTriangle.points[0].y = projectedPoints[0].y;
+        projectedTriangle.points[1].x = projectedPoints[1].x;
+        projectedTriangle.points[1].y = projectedPoints[1].y;
+        projectedTriangle.points[2].x = projectedPoints[2].x;
+        projectedTriangle.points[2].y = projectedPoints[2].y;
+
         projectedTriangle.color.color = 0xFF000000;
         projectedTriangle.avgDepth = averageDepth;
 
@@ -176,6 +204,13 @@ void RedWoodEngine::update() {
             }
         }
     }
+
+    for (int i = 0; i < trianglesToRender.size(); i++) {
+        //std::cout << "Triangle To Render: " << i << std::endl;
+        //std::cout << trianglesToRender.at(i).points[0] << std::endl;
+        //std::cout << trianglesToRender.at(i).points[1] << std::endl;
+        //std::cout << trianglesToRender.at(i).points[2] << std::endl << std::endl;
+    }
 }
 
 void RedWoodEngine::render() {
@@ -183,7 +218,7 @@ void RedWoodEngine::render() {
 
     SDL_RenderClear(display->renderer);
 
-    display->drawGrid();
+    display->drawGrid();    
     
     for (int i = 0; i < trianglesToRender.size(); i++) {
         Triangle triangle = trianglesToRender.at(i);

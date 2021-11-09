@@ -125,7 +125,7 @@ void Display::drawRect(int x, int y, int width, int height, color_t rectColor) {
     }
 }
 
-void Display::drawLine(int x0, int x1, int y0, int y1, color_t lineColor) {
+void Display::drawLine(int x0, int y0, int x1, int y1, color_t lineColor) {
     int deltaX = x1 - x0;
     int deltaY = y1 - y0;
 
