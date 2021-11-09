@@ -1,6 +1,7 @@
 #ifndef __VEC_HPP__
 #define __VEC_HPP__
 
+#include <iostream>
 class Vec2 {
     public:
         double x, y;
@@ -16,6 +17,7 @@ class Vec2 {
         Vec2 div(double factor);
         double dot(const Vec2& v);
         void normalize();
+        friend std::ostream& operator<<(std::ostream& out, const Vec2& rhs);
 };
 
 class Vec3 {
@@ -37,6 +39,8 @@ class Vec3 {
         Vec3 rotateX(double angle);
         Vec3 rotateY(double angle);
         Vec3 rotateZ(double angle);
+
+        friend std::ostream& operator<<(std::ostream& out, const Vec3& rhs);
 };
 
 class Vec4 {
@@ -45,6 +49,7 @@ class Vec4 {
         Vec4();
         Vec4(double x, double y, double z, double w);
         ~Vec4();
+        friend std::ostream& operator<<(std::ostream& out, const Vec4& rhs);
 };
 
 // global conversion functions

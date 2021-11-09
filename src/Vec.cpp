@@ -1,5 +1,6 @@
 #include "Vec.hpp"
 #include <cmath>
+#include <iomanip>
 
 //=====================================================
 // Implementations of Vec2 functions
@@ -56,6 +57,12 @@ void Vec2::normalize() {
     y = y / length;
 }
 
+std::ostream& operator<<(std::ostream& out, const Vec2& rhs) {
+    std::cout << "Vec2: " << "(.x = " << rhs.x << ", .y = " << rhs.y << ")";
+    return out;
+}
+
+
 //=====================================================
 // Implementations of Vec3 functions
 //=====================================================
@@ -92,7 +99,7 @@ Vec3 Vec3::sub(const Vec3& v) {
 Vec3 Vec3::mul(double factor) {
     double a = x * factor;
     double b = y * factor;
-    double c = c * factor;
+    double c = z * factor;
 
     Vec3 result(a, b, c);
     return result;
@@ -132,9 +139,9 @@ Vec3 Vec3::cross(const Vec3& v) {
 Vec3 Vec3::rotateX(double angle) {
     double a = x;
     double b = y * cos(angle) - z * sin(angle);
-    double c = y * sin(angle) + z * cos(angle);
+    double c = z * sin(angle) + z * cos(angle);
     
-    Vec3 result(a, b, b);
+    Vec3 result(a, b, c);
     return result;
 }
 Vec3 Vec3::rotateY(double angle) {
@@ -154,6 +161,11 @@ Vec3 Vec3::rotateZ(double angle) {
     return result;
 }
 
+std::ostream& operator<<(std::ostream& out, const Vec3& rhs) {
+    std::cout << "Vec3: " << "(.x = " << rhs.x << ", .y = " << rhs.y << ", .z = " << rhs.z << ")";
+    return out;
+}
+
 //=====================================================
 // Implementations of Vec3 functions
 //=====================================================
@@ -164,6 +176,11 @@ Vec4::Vec4(double x, double y, double z, double w) :
     x(x), y(y), z(z), w(w) {}
 
 Vec4::~Vec4() {}
+
+std::ostream& operator<<(std::ostream& out, const Vec4& rhs) {
+    std::cout << std::setprecision(6) << std::fixed << "Vec4: " << "(.x = " << rhs.x << ", .y = " << rhs.y << ", .z = " << rhs.z << ", .w = " << rhs.w << ")";
+    return out;
+}
 
 Vec3 Vec4_To_Vec3(const Vec4& v) {
     Vec3 result(v.x, v.y, v.z);
