@@ -5,15 +5,17 @@
 #include "Vec.hpp"
 
 class Triangle {
-    private:
-        Vec4 points[3];
-        color_t color;
-
     public:
+        Vec2 points[3];
+        color_t color;
+        double avgDepth;
+
         Triangle();
         ~Triangle();
 
-        void drawFilledTriangle(Display* display, color_t triangleColor);
+        void drawTriangle(Display* display);
+
+        void drawFilledTriangle(Display* display);
 
     private:
         void intSwap(int* a, int* b);
@@ -22,14 +24,9 @@ class Triangle {
 
         void sortVerticiesByHeight();
 
-        void renderFlatBottom(Display* display, color_t triangleColor);
+        void renderFlatTop(int x0, int y0, int x1, int y1, int x2, int y2, Display* display, color_t color);
 
-        void renderFlatTop(Display* display, color_t triangleColor);
-
-        void drawTrianglePixel(int x, int y, Display* display, color_t trianglePixelColor);
-
-        Vec3 barycentricWeights(Vec2 a, Vec2 b, Vec2 c, Vec2 p);
-        
+        void renderFlatBottom(int x0, int y0, int x1, int y1, int x2, int y2, Display* display, color_t color);
 };
 
 #endif // __TRIANGLE_HPP__

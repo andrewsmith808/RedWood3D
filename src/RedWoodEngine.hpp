@@ -3,22 +3,41 @@
 
 #include "Display.hpp"
 #include "Vec.hpp"
+#include "Triangle.hpp"
+#include "Matrix4.hpp"
+#include "Mesh.hpp"
+#include <vector>
 
 const int FPS = 30;
 const int TARGET_FRAME_TIME = 1000 / FPS;
 
-typedef struct {
-    Vec3 position;
-    Vec3 direction;
-    Vec3 forward_velocity;
-    double yaw;
-} camera_t;
+enum CullMethod {
+    CULL_NONE,
+    CULL_BACKFACE
+};
 
 class RedWoodEngine {
     private:
         Display* display;
-        camera_t camera;
         bool isRunning;
+        int previousFrameTime;
+        double deltaTime;
+
+        CullMethod cullMethod;
+
+        Vec3 cameraPosition;
+        double fov;
+        double aspectRatio;
+        double zNear;
+        double zFar;
+
+        Mesh mesh;
+
+        std::vector<Triangle> trianglesToRender;
+        Matrix4 matrixGenerator;
+        Matrix4 worldMatrix;
+        Matrix4 projectionMatrix;
+        Matrix4 viewMatrix;
 
     public:
         // produce a fullscreen window
@@ -32,9 +51,13 @@ class RedWoodEngine {
         void run();
     
     private:
+        void setup();
+
         void processInput();
 
         void update();
+
+        void render();
 
         void setDefaultCamera();
 };

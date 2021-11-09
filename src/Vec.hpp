@@ -1,68 +1,55 @@
 #ifndef __VEC_HPP__
 #define __VEC_HPP__
 
+#include <iostream>
 class Vec2 {
-    private:
-        double x, y;
     public:
+        double x, y;
+
         Vec2();
         Vec2(double x, double y);
         ~Vec2();
 
-        double getX() const;
-        double getY() const;
-
         double length();
-        void add(const Vec2& v);
+        Vec2 add(const Vec2& v);
         Vec2 sub(const Vec2& v);
-        void mul(double factor);
-        void div(double factor);
+        Vec2 mul(double factor);
+        Vec2 div(double factor);
         double dot(const Vec2& v);
         void normalize();
+        friend std::ostream& operator<<(std::ostream& out, const Vec2& rhs);
 };
 
 class Vec3 {
-    private:
-        double x, y, z;
     public:
+        double x, y, z;
         Vec3();
         Vec3(double x, double y, double z);
         ~Vec3();
 
-        double getX() const;
-        double getY() const;
-        double getZ() const;
-
         double length();
-        void add(const Vec3& v);
+        Vec3 add(const Vec3& v);
         Vec3 sub(const Vec3& v);
-        void div(double factor);
-        void normalize();
-        void mul(double factor);
+        Vec3 mul(double factor);
+        Vec3 div(double factor);
+        Vec3 normalize();
+
         double dot(const Vec3& v);
         Vec3 cross(const Vec3& v);
         Vec3 rotateX(double angle);
         Vec3 rotateY(double angle);
         Vec3 rotateZ(double angle);
+
+        friend std::ostream& operator<<(std::ostream& out, const Vec3& rhs);
 };
 
 class Vec4 {
-    private:
-        double x, y, z, w;
     public:
+        double x, y, z, w;
         Vec4();
         Vec4(double x, double y, double z, double w);
         ~Vec4();
-
-        double getX() const;
-        double getY() const;
-        double getZ() const;
-        double getW() const;
-
-        void setX(double value);
-        void setY(double value);
-        void setZ(double value);
-        void setW(double value);
+        friend std::ostream& operator<<(std::ostream& out, const Vec4& rhs);
 };
 
 // global conversion functions
