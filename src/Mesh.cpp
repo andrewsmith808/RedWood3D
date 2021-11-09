@@ -5,9 +5,9 @@ Mesh::Mesh() {
     rotation.y = 0;
     rotation.z = 0;
 
-    scale.x = 1;
-    scale.y = 1;
-    scale.z = 1;
+    scale.x = 1.0;
+    scale.y = 1.0;
+    scale.z = 1.0;
 
     translation.x = 0;
     translation.y = 0;
