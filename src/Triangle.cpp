@@ -3,9 +3,9 @@
 #include <iostream>
 
 Triangle::Triangle() {
-    Vec4 vec1;
-    Vec4 vec2;
-    Vec4 vec3;
+    Vec2 vec1;
+    Vec2 vec2;
+    Vec2 vec3;
 
     points[0] = vec1;
     points[1] = vec2;
@@ -26,6 +26,8 @@ void Triangle::drawTriangle(Display* display) {
     int y1 = points[1].y;
     int x2 = points[2].x;
     int y2 = points[2].y;
+
+    //std::cout << x0 << " " << y0 << " "<< x1 << " "<< y1 << " "<< x2 << " "<< y2 << std::endl;
 
     display->drawLine(x0, y0, x1, y1, this->color);
     display->drawLine(x1, y1, x2, y2, this->color);
@@ -115,9 +117,9 @@ void Triangle::renderFlatTop(int x0, int y0, int x1, int y1, int x2, int y2, Dis
 
 
 void Triangle::sortVerticiesByHeight() {
-    Vec4 temp;
+    Vec2 temp;
 
-    //std::cout << "unordered points: " << points[0].getY() << " " << points[1].getY() << " " << points[2].getY() << std::endl;
+    std::cout << "unordered points: " << points[0].y << " " << points[1].y << " " << points[2].y << std::endl;
 
     if (points[0].y > points[1].y) {
         temp = points[1];
@@ -135,7 +137,7 @@ void Triangle::sortVerticiesByHeight() {
         points[0] = temp;
     }
 
-    //std::cout << "ordered points in fn: " << points[0].getY() << " " << points[1].getY() << " " << points[2].getY() << std::endl;
+    std::cout << "ordered points: " << points[0].y << " " << points[1].y << " " << points[2].y << std::endl;
 }
 
 void Triangle::intSwap(int* a, int* b) {
