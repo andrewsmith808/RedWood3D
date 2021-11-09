@@ -1,5 +1,6 @@
 #include "Matrix4.hpp"
 #include <cmath>
+#include <iomanip>
 
 Matrix4::Matrix4() {
     this->identity();
@@ -136,7 +137,7 @@ Vec4 Matrix4::mulProjection(Vec4 v) {
 std::ostream& operator<<(std::ostream& out, const Matrix4& rhs) {
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            out << rhs.mat4[i][j] << " ";
+            out << std::setprecision(6) << std::fixed << rhs.mat4[i][j] << " ";
         }
         out << std::endl;
     }
