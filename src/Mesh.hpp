@@ -19,15 +19,11 @@ class Mesh {
         std::vector<Vec3> verticies;
         std::vector<face_t> faces;
         
-    public:
         Mesh();
-        Mesh(std::string filename);
-
         ~Mesh();
 
     private:
         void loadDefaultCubeData();
-        void loadObjFileData();
 };
 
 #endif // __MESH_HPP__

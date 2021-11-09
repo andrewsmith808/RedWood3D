@@ -5,10 +5,9 @@
 #include <iostream>
 
 class Matrix4 {
-    private:
+    public:
         double mat4[4][4];
     
-    public:
         Matrix4();
 
         ~Matrix4();
@@ -16,10 +15,6 @@ class Matrix4 {
         void identity();
 
         void zero();
-
-        double getElement(int index1, int index2) const;
-
-        void setElement(int index1, int index2, double value);
 
         Matrix4 scale(double sx, double sy, double sz);
 
@@ -31,13 +26,13 @@ class Matrix4 {
 
         Matrix4 rotateZ(double angle);
 
-        Matrix4 perspective(double fov, double aspect, double znear, double zfar);
-
         Vec4 mulVec4(const Vec4& v);
 
         Matrix4 mulMatrix(Matrix4 m);
 
-        Matrix4 lookAt(Vec3 eye, Vec3 target, Vec3 up);
+        Matrix4 perspective(double fov, double aspect, double znear, double zfar);
+
+        Vec4 mulProjection(Vec4 v);
 
         friend std::ostream& operator<<(std::ostream& out, const Matrix4& rhs);
 

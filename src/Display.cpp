@@ -8,7 +8,6 @@ Display::Display() {
     windowHeight = display_mode.h;
     colorBuffer = nullptr;
     colorBufferTexture = nullptr;
-    zBuffer = nullptr;
 }
 
 Display::Display(int windowWidth, int windowHeight) :
@@ -17,33 +16,12 @@ Display::Display(int windowWidth, int windowHeight) :
     window(nullptr),
     renderer(nullptr),
     colorBuffer(nullptr),
-    colorBufferTexture(nullptr),
-    zBuffer(nullptr) {}
+    colorBufferTexture(nullptr) {}
 
 Display::~Display() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     delete colorBuffer;
-}
-
-int Display::getWindowWidth() const {
-    return windowWidth;
-}
-        
-int Display::getWindowHeight() const {
-    return windowHeight;
-}
-
-SDL_Renderer* Display::getRender() const {
-    return renderer;
-}
-
-double Display::getZBufferAt(int index) const {
-    return zBuffer[index];
-}
-
-void Display::setZbufferAt(int index, double value) {
-    zBuffer[index] = value;
 }
 
 bool Display::initializeWindow() {
@@ -84,7 +62,6 @@ void Display::render() {
     renderColorBuffer();
 
     clearColorBuffer(clearColor);
-    clearZBuffer();
 
     SDL_RenderPresent(renderer);
 }
@@ -93,7 +70,6 @@ void Display::setup() {
 
     // allocate memory for the color buffer and z buffer
     colorBuffer = (unsigned int*)malloc(sizeof(unsigned int) * windowWidth * windowHeight);
-    zBuffer = (double*)malloc(sizeof(double) * windowWidth * windowHeight);
 
     // Creating a SDL texture that is used to display the color buffer
     colorBufferTexture = SDL_CreateTexture(
@@ -124,14 +100,6 @@ void Display::clearColorBuffer(color_t color) {
 
 }
 
-void Display::clearZBuffer() {
-    for (int y = 0; y < windowHeight; y++) {
-        for (int x = 0; x < windowWidth; x++) {
-            zBuffer[(windowWidth * y) + x] = 1.0; 
-        }
-    }
-}
-
 void Display::drawPixel(int x, int y, color_t pixelColor) {
     if (x >= 0 && x < windowWidth && y >= 0 && y < windowHeight) {
         colorBuffer[(windowWidth * y) + x] = pixelColor.color;
@@ -157,7 +125,7 @@ void Display::drawRect(int x, int y, int width, int height, color_t rectColor) {
     }
 }
 
-void Display::drawLine(int x0, int x1, int y0, int y1, color_t lineColor) {
+void Display::drawLine(int x0, int y0, int x1, int y1, color_t lineColor) {
     int deltaX = x1 - x0;
     int deltaY = y1 - y0;
 

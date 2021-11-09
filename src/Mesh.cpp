@@ -1,25 +1,22 @@
 #include "Mesh.hpp"
 
 Mesh::Mesh() {
-    Vec3 r(0,0,0);
-    rotation = r;
+    rotation.x = 0;
+    rotation.y = 0;
+    rotation.z = 0;
 
-    Vec3 s(1,1,1);
-    scale = s;
+    scale.x = 1.0;
+    scale.y = 1.0;
+    scale.z = 1.0;
 
-    Vec3 t(0,0,0);
-    translation = t;
+    translation.x = 0;
+    translation.y = 0;
+    translation.z = 0;
    
     loadDefaultCubeData();
 }
 
-Mesh::Mesh(std::string filename) {
-    // TODO:: load in object file data
-}
-
-Mesh::~Mesh() {
-
-}
+Mesh::~Mesh() {}
 
 void Mesh::loadDefaultCubeData() {
     color_t cubeColor = {0xFFFFFF88};
@@ -72,8 +69,4 @@ void Mesh::loadDefaultCubeData() {
     faces.push_back(top2);
     faces.push_back(bottom1);
     faces.push_back(bottom2);
-}
-
-void Mesh::loadObjFileData() {
-    // TODO:: read obj file data format for other objects other than cube
 }
