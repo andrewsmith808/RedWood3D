@@ -5,6 +5,8 @@ This Project is based on software rendering. (Refering to rendering process that
 
 I use SDL as a means to draw to a window. All other graphics elements will be coded from scratch.
 
+![screen-gif](./cube.gif)
+
 ## Dependencies: Installing SDL
 
 TODO: ADD SDL INSTALLATION NOTES - MAC - LINKS TO RESOURCES FOR WINDOWS
