@@ -16,6 +16,15 @@ enum CullMethod {
     CULL_BACKFACE
 };
 
+enum RenderMethod {
+    RENDER_FILLED_TRIANGLE,
+    RENDER_WIRE
+};
+
+typedef struct {
+    Vec3 direction;
+} light_t;
+
 class RedWoodEngine {
     private:
         Display* display;
@@ -31,6 +40,7 @@ class RedWoodEngine {
         double zNear;
         double zFar;
 
+        light_t light;
         Mesh mesh;
 
         std::vector<Triangle> trianglesToRender;
@@ -59,7 +69,7 @@ class RedWoodEngine {
 
         void render();
 
-        void setDefaultCamera();
+        color_t applyLightIntensity(color_t originalColor, double intensityFactor);
 };
 
 #endif // __RED_WOOD_ENGINE_HPP__
