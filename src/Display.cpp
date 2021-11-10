@@ -55,7 +55,7 @@ bool Display::initializeWindow() {
 }
 
 void Display::render() {
-    color_t clearColor = {0xFF101010};
+    color_t clearColor = {0xFF696969};
 
     SDL_RenderClear(renderer);
 
@@ -107,9 +107,9 @@ void Display::drawPixel(int x, int y, color_t pixelColor) {
 }
 
 void Display::drawGrid() {
-    color_t gridColor = {0xFF000000};
-    for (int y = 0; y < windowHeight; y += 20) {
-        for (int x = 0; x < windowWidth; x += 20) {
+    color_t gridColor = {0xFFFFFFFF};
+    for (int y = 0; y < windowHeight; y += 50) {
+        for (int x = 0; x < windowWidth; x += 50) {
             drawPixel(x, y, gridColor);
         }
     }

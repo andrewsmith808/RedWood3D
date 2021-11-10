@@ -19,7 +19,7 @@ Mesh::Mesh() {
 Mesh::~Mesh() {}
 
 void Mesh::loadDefaultCubeData() {
-    color_t cubeColor = {0xFFFFFF88};
+    color_t cubeColor = {0x9990AA90};
 
     Vec3 vertex1(-1, -1, -1);
     Vec3 vertex2(-1,  1, -1);
