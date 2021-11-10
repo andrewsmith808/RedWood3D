@@ -95,7 +95,20 @@ void Triangle::drawFilledTriangle(Display* display) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 void Triangle::renderFlatBottom(int x0, int y0, int x1, int y1, int x2, int y2, Display* display, color_t color) {
-    //TODO:: begin render process
+    /// Find the two slopes (two triangle legs)
+    float inverseSlope1 = (double)(x1 - x0) / (y1 - y0);
+    float inverseSlope2 = (double)(x2 - x0) / (y2 - y0);
+
+    // Start x_start and x_end from the top vertex (x0,y0)
+    float xStart = x0;
+    float xEnd = x0;
+
+    // Loop all the scanlines from top to bottom
+    for (int y = y0; y <= y2; y++) {
+        display->drawLine(xStart, y, xEnd, y, color);
+        xStart += inverseSlope1;
+        xEnd += inverseSlope2;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -112,14 +125,27 @@ void Triangle::renderFlatBottom(int x0, int y0, int x1, int y1, int x2, int y2, 
 //
 ///////////////////////////////////////////////////////////////////////////////
 void Triangle::renderFlatTop(int x0, int y0, int x1, int y1, int x2, int y2, Display* display, color_t color) {
-    //TODO:: begin the render process;
+    // Find the two slopes (two triangle legs)
+    float inverseSlope1 = (double)(x2 - x0) / (y2 - y0);
+    float inverseSlope2 = (double)(x2 - x1) / (y2 - y1);
+
+    // Start x_start and x_end from the bottom vertex (x2,y2)
+    float xStart = x2;
+    float xEnd = x2;
+
+    // Loop all the scanlines from bottom to top
+    for (int y = y2; y >= y0; y--) {
+        display->drawLine(xStart, y, xEnd, y, color);
+        xStart -= inverseSlope1;
+        xEnd -= inverseSlope2;
+    }
 }
 
 
 void Triangle::sortVerticiesByHeight() {
     Vec2 temp;
 
-    std::cout << "unordered points: " << points[0].y << " " << points[1].y << " " << points[2].y << std::endl;
+    //std::cout << "unordered points: " << points[0].y << " " << points[1].y << " " << points[2].y << std::endl;
 
     if (points[0].y > points[1].y) {
         temp = points[1];
@@ -137,7 +163,7 @@ void Triangle::sortVerticiesByHeight() {
         points[0] = temp;
     }
 
-    std::cout << "ordered points: " << points[0].y << " " << points[1].y << " " << points[2].y << std::endl;
+    //std::cout << "ordered points: " << points[0].y << " " << points[1].y << " " << points[2].y << std::endl;
 }
 
 void Triangle::intSwap(int* a, int* b) {

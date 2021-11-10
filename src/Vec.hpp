@@ -32,7 +32,7 @@ class Vec3 {
         Vec3 sub(const Vec3& v);
         Vec3 mul(double factor);
         Vec3 div(double factor);
-        Vec3 normalize();
+        void normalize();
 
         double dot(const Vec3& v);
         Vec3 cross(const Vec3& v);

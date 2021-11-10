@@ -114,14 +114,11 @@ Vec3 Vec3::div(double factor) {
     return result;
 }
 
-Vec3 Vec3::normalize() {
+void Vec3::normalize() {
     double length = this->length();
-    double a = x / length;
-    double b = y / length;
-    double c = z / length;
-
-    Vec3 result(a, b, c);
-    return result;
+    x /= length;
+    y /= length;
+    z /= length;
 }
 
 double Vec3::dot(const Vec3& v) {

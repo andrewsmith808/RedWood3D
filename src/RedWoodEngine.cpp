@@ -16,6 +16,8 @@ RedWoodEngine::RedWoodEngine() {
     aspectRatio = (double)display->windowHeight / (double)display->windowWidth;
     zNear = 0.1;
     zFar = 100.0;
+
+    light.direction.x = 0; light.direction.y = 0; light.direction.z = 1;
 }
 
 RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) {
@@ -29,6 +31,8 @@ RedWoodEngine::RedWoodEngine(int windowWidth, int windowHeight) {
     aspectRatio = (double)display->windowHeight / (double)display->windowWidth;
     zNear = 0.1;
     zFar = 100.0;
+
+    light.direction.x = 0; light.direction.y = 0; light.direction.z = 1;
 }
 
 RedWoodEngine::~RedWoodEngine() {
@@ -84,8 +88,8 @@ void RedWoodEngine::update() {
 
     //std::cout << "Triangles to render size: " << trianglesToRender.size() << std::endl;
 
-    mesh.rotation.x += 0.02;
-    mesh.rotation.y += 0.07;
+    mesh.rotation.x += 0.007;
+    mesh.rotation.y += 0.03;
     mesh.rotation.z += 0.004;
     mesh.translation.z = 5.0;
 
@@ -182,6 +186,14 @@ void RedWoodEngine::update() {
 
         double averageDepth = (transformedVerticies[0].z + transformedVerticies[1].z + transformedVerticies[2].z) / 3.0;
 
+        // Calculate the shade intensity based on how aliged is the face normal and the opposite of the light direction
+        double lightIntensity = -1 * normal.dot(light.direction);
+        std::cout << "normal: " << normal << std::endl;
+        std::cout << "Light Intensity: " << lightIntensity << std::endl;
+
+        // Calculate the triangle color based on the light angle
+        color_t triangleColor = applyLightIntensity(meshFace.color, lightIntensity);
+
         projectedTriangle.points[0].x = projectedPoints[0].x;
         projectedTriangle.points[0].y = projectedPoints[0].y;
         projectedTriangle.points[1].x = projectedPoints[1].x;
@@ -189,7 +201,7 @@ void RedWoodEngine::update() {
         projectedTriangle.points[2].x = projectedPoints[2].x;
         projectedTriangle.points[2].y = projectedPoints[2].y;
 
-        projectedTriangle.color.color = 0xFF000000;
+        projectedTriangle.color = triangleColor;
         projectedTriangle.avgDepth = averageDepth;
 
         trianglesToRender.push_back(projectedTriangle);
@@ -214,7 +226,7 @@ void RedWoodEngine::update() {
 }
 
 void RedWoodEngine::render() {
-    color_t clearColor = {0xFFFFFFFF};
+    color_t clearColor = {0xFF111111};
 
     SDL_RenderClear(display->renderer);
 
@@ -223,7 +235,7 @@ void RedWoodEngine::render() {
     for (int i = 0; i < trianglesToRender.size(); i++) {
         Triangle triangle = trianglesToRender.at(i);
 
-        triangle.drawTriangle(display);
+        triangle.drawFilledTriangle(display);
     }
 
     trianglesToRender.clear();
@@ -233,4 +245,20 @@ void RedWoodEngine::render() {
     display->clearColorBuffer(clearColor);
 
     SDL_RenderPresent(display->renderer);
+}
+
+color_t RedWoodEngine::applyLightIntensity(color_t originalColor, double intensityFactor) {
+    if (intensityFactor < 0)
+        intensityFactor = 0;
+    if (intensityFactor > 1) 
+        intensityFactor = 1;
+
+    color_t a = {originalColor.color & 0xFF000000};
+    color_t r = {(originalColor.color & 0x00FF0000) * intensityFactor};
+    color_t g = {(originalColor.color & 0x0000FF00) * intensityFactor};
+    color_t b = {(originalColor.color & 0x000000FF) * intensityFactor};
+
+    color_t newColor = {a.color | (r.color & 0x00FF0000) | (g.color & 0x0000FF00) | (b.color & 0x000000FF)};
+
+    return newColor;
 }
