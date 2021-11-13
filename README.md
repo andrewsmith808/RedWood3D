@@ -27,4 +27,4 @@ Does not include support for windows machines. Looking to do that in a future up
 - Simple camera movement system using look at function and robust projection matrix for perspective.
 - Texturizing mesh from png data.
 - Develop a clipping algorithm.
-- cross platform use and build method (cmake).
+- Cross platform use and build method (cmake).
