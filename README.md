@@ -3,18 +3,28 @@ A 3D renderer Project to learn computer graphics programming fundamentals.
 
 This Project is based on software rendering. (Refering to rendering process that is not dependent on graphics hardware).
 
-I use SDL as a means to draw to a window. All other graphics elements will be coded from scratch.
+I use SDL as a means to open a window. All other graphics elements will be coded from scratch.
 
 ![screen-gif](./cube.gif)
 
-## Dependencies: Installing SDL
+## Notice of Dependencies
+Uses:
+  - SDL
+  - Unix based (Mac and Linux)
 
-TODO: ADD SDL INSTALLATION NOTES - MAC - LINKS TO RESOURCES FOR WINDOWS
+Does not include support for windows machines. Looking to do that in a future update.
 
-## 3D Graphics Implementations
+## Current Implementations
+- Vector and Matrix mathmatics operations.
+- Color Buffer for drawing pixels to the screen.
+- DDA line algorithm.
+- Wireframe and triangle rasterization (fill flat top and bottom).
+- Weak perspective.
+- World Matrix calculations for mesh transformations.
 
-TODO: ADD KEY FEATURES CODED - TEXT AND IMAGES
-
-## Future Improvements
-
-TODO: ADD COMMENTARY ON FUTURE DEVELOPMENTS THAT COULD BE MADE
+## Current and Future development
+- Read Obj files to import different models.
+- Simple camera movement system using look at function and robust projection matrix for perspective.
+- Texturizing mesh from png data.
+- Develop a clipping algorithm.
+- cross platform use and build method (cmake).
