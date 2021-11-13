@@ -1,11 +1,12 @@
 # RedWood3D
-A 3D renderer Project to learn computer graphics programming fundamentals.
+A 3D renderer personal project to learn computer graphics programming fundamentals.
 
 This Project is based on software rendering. (Refering to rendering process that is not dependent on graphics hardware).
 
 I use SDL as a means to open a window. All other graphics elements will be coded from scratch.
 
 ![screen-gif](./cube.gif)
+A sample of the default cube being rendered! Using nothing but code and math!
 
 ## Notice of Dependencies
 Uses:
