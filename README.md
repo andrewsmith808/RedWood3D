@@ -9,9 +9,8 @@ I use SDL as a means to open a window. All other graphics elements will be coded
 A sample of the default cube being rendered! Using nothing but code and math!
 
 ## Notice of Dependencies
-Uses:
-  - SDL
-  - Unix based (Mac and Linux)
+ - SDL
+ - Unix based (Mac and Linux)
 
 Does not include support for windows machines. Looking to do that in a future update.
 
